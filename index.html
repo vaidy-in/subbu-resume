@@ -141,6 +141,7 @@
                 <div class="tab-buttons">
                     <button class="tab-button active" data-tab="projects">Key Projects</button>
                     <button class="tab-button" data-tab="skills">Technical Toolbox</button>
+                    <button type="button" class="tab-button" data-tab="writings" id="writings">Writings</button>
                 </div>
                 
                 <div class="tab-content">
@@ -245,22 +246,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="writings-tab" class="tab-panel">
+                        <p class="writings-intro">Notes on data governance, lakehouse patterns, and enterprise integration—starting with linking Informatica CDGC to Databricks and Unity Catalog.</p>
+                        <div class="writings-grid">
+                            <a href="writings/cdgc-databricks-unity-catalog.html" class="writing-card">
+                                <span class="writing-card-tag">CDGC · Databricks · Unity Catalog</span>
+                                <h3>Link CDGC with Databricks Catalog</h3>
+                                <p>How data quality scores flow from Informatica Cloud Data Governance and Catalog into Databricks and Unity Catalog for governed, trusted consumption.</p>
+                                <span class="writing-card-cta">Read article</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Writings Section -->
-    <section id="writings" class="writings">
-        <div class="container">
-            <h2 class="section-title">Writings</h2>
-            <p class="writings-intro">Notes on data governance, lakehouse patterns, and enterprise integration—starting with linking Informatica CDGC to Databricks and Unity Catalog.</p>
-            <div class="writings-grid">
-                <a href="writings/cdgc-databricks-unity-catalog.html" class="writing-card">
-                    <span class="writing-card-tag">CDGC · Databricks · Unity Catalog</span>
-                    <h3>Link CDGC with Databricks Catalog</h3>
-                    <p>How data quality scores flow from Informatica Cloud Data Governance and Catalog into Databricks and Unity Catalog for governed, trusted consumption.</p>
-                    <span class="writing-card-cta">Read article</span>
+            <div class="projects-cta">
+                <a href="my-work.html" class="secondary-button">
+                    Read more about this
+                    <svg class="button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M7 17l9.2-9.2M17 17V7H7"/>
+                    </svg>
                 </a>
             </div>
         </div>

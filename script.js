@@ -37,7 +37,7 @@ function configureHeader(currentPage) {
                 link.setAttribute('href', href);
             }
         });
-    } else if (currentPage === 'story' || currentPage === 'resume' || currentPage === 'article') {
+    } else if (currentPage === 'story' || currentPage === 'resume' || currentPage === 'article' || currentPage === 'my-work') {
         // For subpages, hash links should go back to index.html with anchors
         const prefix = currentPage === 'article' ? '../' : '';
         navLinks.forEach(link => {
@@ -48,6 +48,8 @@ function configureHeader(currentPage) {
                 link.setAttribute('href', '../resume.html');
             } else if (href === 'story.html' && currentPage === 'article') {
                 link.setAttribute('href', '../story.html');
+            } else if (href === 'my-work.html' && currentPage === 'article') {
+                link.setAttribute('href', '../my-work.html');
             }
         });
     }
@@ -85,6 +87,12 @@ function initializeNavigation() {
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) {
                     e.preventDefault();
+                    if (href === '#writings') {
+                        const writingsTabBtn = document.querySelector('.tab-button[data-tab="writings"]');
+                        if (writingsTabBtn) {
+                            writingsTabBtn.click();
+                        }
+                    }
                     smoothScroll(href);
                 }
             });
@@ -122,6 +130,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
+    function activateTabByName(name) {
+        const btn = document.querySelector('.tab-button[data-tab="' + name + '"]');
+        if (btn) {
+            btn.click();
+        }
+    }
+
+    function applyHashTab() {
+        if (window.location.hash === '#writings') {
+            activateTabByName('writings');
+        }
+    }
+
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             const targetTab = this.getAttribute('data-tab');
@@ -140,6 +161,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    applyHashTab();
+    window.addEventListener('hashchange', applyHashTab);
 });
 
 // Scroll animations
