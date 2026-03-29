@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'; frame-src https://www.youtube.com https://www.youtube-nocookie.com; object-src 'none'; upgrade-insecure-requests">
     <title>My Journey of Resilience and Reinvention - Subramanian Gopalkrishnan</title>
 
     <!-- Open Graph / Facebook -->
@@ -188,7 +190,7 @@
                 <div class="story-cta">
                     <h3>Ready to Connect?</h3>
                     <p>If this story resonates with you, and you're looking for a data leader who brings both technical excellence and human empathy to every challenge, I'd love to hear from you.</p>
-                    <button class="secondary-button" onclick="window.location.href='index.html#contact';">
+                    <button type="button" class="secondary-button js-nav-index-contact" aria-label="Go to contact section on home page">
                         Let's Connect
                         <svg class="button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M7 17l9.2-9.2M17 17V7H7"/>

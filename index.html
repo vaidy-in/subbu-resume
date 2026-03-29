@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'; frame-src https://www.youtube.com https://www.youtube-nocookie.com; object-src 'none'; upgrade-insecure-requests">
     <title>Subramanian Gopalkrishnan - Data Governance and Data Engineering Manager</title>
 
     <!-- Open Graph / Facebook -->
@@ -122,7 +124,7 @@
                         <p>With over 18 years of hands-on implementation and ops experience, I specialize in building enterprise-wide data strategies and modern cloud-native platforms across utilities, healthcare, and life sciences industries.</p>
                         <p>My expertise spans Data Governance (Collibra, SAP Information Steward, Informatica Data Management Cloud), Cloud platforms (Azure, AWS), Data Platforms (Snowflake, Databricks, Informatica), and AI/ML (Palantir Foundry).</p>
                     </div>
-                    <button class="secondary-button" onclick="window.open('resume/Subu- Data Governance & Engineering Manager One-Pager CV.pdf', '_blank');">
+                    <button type="button" class="secondary-button" id="btn-open-resume-pdf" aria-label="Open resume PDF in a new tab">
                         Download Resume
                         <svg class="button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M7 17l9.2-9.2M17 17V7H7"/>
@@ -307,7 +309,7 @@
                         <p><strong>The Connection:</strong> Resilience isn't just a buzzword—it's a framework. Whether I'm architecting enterprise data platforms or teaching Carnatic violin (honoring my mother's memory), I bring the same data-driven curiosity and systematic problem-solving that transformed my life.</p>
                     </div>
                     
-                    <button class="secondary-button" onclick="window.location.href='story.html'">
+                    <button type="button" class="secondary-button" id="btn-read-full-story" aria-label="Read full personal story">
                         Read My Full Story
                         <svg class="button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M7 17l9.2-9.2M17 17V7H7"/>
