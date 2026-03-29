@@ -1,6 +1,14 @@
+// Header path: pages under /writings/ need parent-relative fetch
+function headerFetchPath() {
+    if (window.location.pathname.includes('/writings/')) {
+        return '../header.html';
+    }
+    return 'header.html';
+}
+
 // Header loading function
 function loadHeader() {
-    fetch('header.html')
+    fetch(headerFetchPath())
         .then(response => response.text())
         .then(data => {
             document.getElementById('header-placeholder').innerHTML = data;
@@ -29,12 +37,19 @@ function configureHeader(currentPage) {
                 link.setAttribute('href', href);
             }
         });
-    } else if (currentPage === 'story' || currentPage === 'resume') {
-        // For story page, links should go back to index.html with anchors
+    } else if (currentPage === 'story' || currentPage === 'resume' || currentPage === 'article' || currentPage === 'my-work') {
+        // For subpages, hash links should go back to index.html with anchors
+        const prefix = currentPage === 'article' ? '../' : '';
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
             if (href.startsWith('#')) {
-                link.setAttribute('href', 'index.html' + href);
+                link.setAttribute('href', prefix + 'index.html' + href);
+            } else if (href === 'resume.html' && currentPage === 'article') {
+                link.setAttribute('href', '../resume.html');
+            } else if (href === 'story.html' && currentPage === 'article') {
+                link.setAttribute('href', '../story.html');
+            } else if (href === 'my-work.html' && currentPage === 'article') {
+                link.setAttribute('href', '../my-work.html');
             }
         });
     }
@@ -72,6 +87,12 @@ function initializeNavigation() {
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) {
                     e.preventDefault();
+                    if (href === '#writings') {
+                        const writingsTabBtn = document.querySelector('.tab-button[data-tab="writings"]');
+                        if (writingsTabBtn) {
+                            writingsTabBtn.click();
+                        }
+                    }
                     smoothScroll(href);
                 }
             });
@@ -109,6 +130,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
+    function activateTabByName(name) {
+        const btn = document.querySelector('.tab-button[data-tab="' + name + '"]');
+        if (btn) {
+            btn.click();
+        }
+    }
+
+    function applyHashTab() {
+        if (window.location.hash === '#writings') {
+            activateTabByName('writings');
+        }
+    }
+
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             const targetTab = this.getAttribute('data-tab');
@@ -127,6 +161,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    applyHashTab();
+    window.addEventListener('hashchange', applyHashTab);
 });
 
 // Scroll animations
@@ -145,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Add fade-in class to elements that should animate
-    const animateElements = document.querySelectorAll('.vision-card, .project-card, .skill-category');
+    const animateElements = document.querySelectorAll('.vision-card, .project-card, .skill-category, .writing-card');
     animateElements.forEach(element => {
         element.classList.add('fade-in');
         observer.observe(element);

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrating Data Quality Scores from CDGC into Unity Catalog — Subramanian Gopalkrishnan</title>
+    <meta name="description" content="How enterprise data quality signals flow from Informatica Cloud Data Governance and Catalog into Databricks and Unity Catalog.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.drivenbydata.pro/writings/cdgc-databricks-unity-catalog.html">
+    <meta property="og:title" content="Link CDGC with Databricks Catalog — Data Quality in Unity Catalog">
+    <meta property="og:description" content="CDGC, Databricks, and Unity Catalog: governed trust signals across the modern data stack.">
+    <meta property="og:image" content="https://www.drivenbydata.pro/images/hero-profile-og.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='10' fill='%231A202C'/><text x='50%' y='54%' dominant-baseline='central' text-anchor='middle' font-size='65' font-weight='600' font-family='Inter, sans-serif' fill='%23ED8936'>S</text></svg>">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="article">
+    <div id="header-placeholder"></div>
+
+    <article class="article-page page-container">
+        <header class="article-hero">
+            <div class="container article-hero-inner">
+                <p class="article-kicker">Informatica CDGC → Databricks → Unity Catalog</p>
+                <h1 class="article-title">Integrating Data Quality Scores from CDGC into Unity Catalog</h1>
+                <p class="article-lead">A DrivenByData-style view of how enterprise data quality signals flow from Informatica Cloud Data Governance and Catalog into Databricks and Unity Catalog for governed, trusted, and reusable consumption.</p>
+                <div class="article-tags">
+                    <span>Data as a product</span>
+                    <span>Governed trust signals</span>
+                    <span>Lakehouse-ready score history</span>
+                    <span>Metadata-driven stewardship</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="container article-body">
+            <section class="article-section">
+                <div class="article-split">
+                    <div class="article-panel">
+                        <p class="article-label">Infographic overview</p>
+                        <h2 class="article-h2">How trust signals move across the modern data stack</h2>
+                        <div class="article-stat-grid">
+                            <div class="article-stat">
+                                <div class="article-stat-label">Platforms</div>
+                                <div class="article-stat-value">3</div>
+                                <div class="article-stat-caption">CDGC, Databricks, Unity Catalog</div>
+                            </div>
+                            <div class="article-stat">
+                                <div class="article-stat-label">Layers</div>
+                                <div class="article-stat-value">4</div>
+                                <div class="article-stat-caption">Source, ingest, govern, consume</div>
+                            </div>
+                            <div class="article-stat">
+                                <div class="article-stat-label">Outputs</div>
+                                <div class="article-stat-value">5+</div>
+                                <div class="article-stat-caption">Scores, tags, trends, dashboards, lineage</div>
+                            </div>
+                            <div class="article-stat">
+                                <div class="article-stat-label">Pattern</div>
+                                <div class="article-stat-value">API</div>
+                                <div class="article-stat-caption">Most common enterprise integration</div>
+                            </div>
+                        </div>
+                        <div class="article-steps-strip">
+                            <div class="article-step-mini"><span class="article-step-emoji" aria-hidden="true">🧪</span><span class="article-step-num">01</span><strong>DQ Execution in CDGC</strong></div>
+                            <div class="article-step-mini"><span class="article-step-emoji" aria-hidden="true">📤</span><span class="article-step-num">02</span><strong>Score Extraction</strong></div>
+                            <div class="article-step-mini"><span class="article-step-emoji" aria-hidden="true">🪣</span><span class="article-step-num">03</span><strong>Bronze Landing</strong></div>
+                            <div class="article-step-mini"><span class="article-step-emoji" aria-hidden="true">⚙️</span><span class="article-step-num">04</span><strong>Databricks Standardization</strong></div>
+                            <div class="article-step-mini"><span class="article-step-emoji" aria-hidden="true">🏛️</span><span class="article-step-num">05</span><strong>Unity Catalog Persistence</strong></div>
+                            <div class="article-step-mini"><span class="article-step-emoji" aria-hidden="true">🏷️</span><span class="article-step-num">06</span><strong>Governance Enrichment</strong></div>
+                            <div class="article-step-mini"><span class="article-step-emoji" aria-hidden="true">📊</span><span class="article-step-num">07</span><strong>Business Consumption</strong></div>
+                        </div>
+                    </div>
+                    <aside class="article-panel article-panel-accent">
+                        <p class="article-label">Score dimensions</p>
+                        <h3 class="article-h3">Core data quality dimensions</h3>
+                        <ul class="article-dimension-list">
+                            <li><span class="article-dim-badge">C</span><span><strong>Completeness</strong> — Required data present</span></li>
+                            <li><span class="article-dim-badge">A</span><span><strong>Accuracy</strong> — Matches expected truth</span></li>
+                            <li><span class="article-dim-badge">V</span><span><strong>Validity</strong> — Conforms to standards</span></li>
+                            <li><span class="article-dim-badge">U</span><span><strong>Uniqueness</strong> — No unintended duplicates</span></li>
+                            <li><span class="article-dim-badge">F</span><span><strong>Freshness</strong> — Arrives on time</span></li>
+                            <li><span class="article-dim-badge">CS</span><span><strong>Consistency</strong> — Aligned across systems</span></li>
+                        </ul>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="article-section">
+                <h2 class="article-h2">End-to-end flow</h2>
+                <div class="article-flow-grid">
+                    <div class="article-flow-card">
+                        <span class="article-flow-step">01 🧪</span>
+                        <h3>DQ Execution in CDGC</h3>
+                        <p>CDGC profiles data, validates rules, and computes dataset and rule-level scores.</p>
+                    </div>
+                    <div class="article-flow-card">
+                        <span class="article-flow-step">02 📤</span>
+                        <h3>Score Extraction</h3>
+                        <p>Extract results through APIs, CDI pipelines, or event-driven triggers for downstream processing.</p>
+                    </div>
+                    <div class="article-flow-card">
+                        <span class="article-flow-step">03 🪣</span>
+                        <h3>Bronze Landing</h3>
+                        <p>Land raw DQ payloads in cloud object storage for traceability and replayability.</p>
+                    </div>
+                    <div class="article-flow-card">
+                        <span class="article-flow-step">04 ⚙️</span>
+                        <h3>Databricks Standardization</h3>
+                        <p>Normalize CDGC payloads into a standard enterprise score model.</p>
+                    </div>
+                    <div class="article-flow-card">
+                        <span class="article-flow-step">05 🏛️</span>
+                        <h3>Unity Catalog Persistence</h3>
+                        <p>Persist curated score history into governed Delta tables inside Unity Catalog.</p>
+                    </div>
+                    <div class="article-flow-card">
+                        <span class="article-flow-step">06 🏷️</span>
+                        <h3>Governance Enrichment</h3>
+                        <p>Add tags, lineage, and metadata context to strengthen discoverability and trust.</p>
+                    </div>
+                    <div class="article-flow-card">
+                        <span class="article-flow-step">07 📊</span>
+                        <h3>Business Consumption</h3>
+                        <p>Expose scorecards to business, governance, and engineering teams.</p>
+                    </div>
+                </div>
+                <div class="article-summary-panel">
+                    <p class="article-label">Infographic summary</p>
+                    <h3 class="article-h3">Source → Standardize → Govern → Consume</h3>
+                    <ul class="article-summary-list">
+                        <li><strong>Source system</strong> — CDGC runs rules and calculates scores</li>
+                        <li><strong>Integration layer</strong> — APIs or CDI move results to the lakehouse</li>
+                        <li><strong>Databricks layer</strong> — Transforms raw payloads into enterprise score models</li>
+                        <li><strong>Governance layer</strong> — Unity Catalog stores governed Delta tables and tags</li>
+                        <li><strong>Consumption layer</strong> — Dashboards and scorecards expose trust signals</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="article-section">
+                <h2 class="article-h2">Detailed process</h2>
+                <p class="article-prose">The pattern below is designed for enterprise-scale implementations where Informatica remains the system of execution for quality rules, while Databricks and Unity Catalog provide standardization, governed persistence, and consumption.</p>
+                <div class="article-detail-grid">
+                    <div class="article-detail-card">
+                        <span class="article-detail-num">01</span>
+                        <h3>DQ Execution in CDGC</h3>
+                        <p>CDGC profiles data, validates rules, and computes dataset and rule-level scores.</p>
+                        <ul>
+                            <li>Profiling and validation</li>
+                            <li>Dimension-level scores</li>
+                            <li>Results stored in Informatica repositories</li>
+                        </ul>
+                    </div>
+                    <div class="article-detail-card">
+                        <span class="article-detail-num">02</span>
+                        <h3>Score Extraction</h3>
+                        <p>Extract results through APIs, CDI pipelines, or event-driven triggers for downstream processing.</p>
+                        <ul>
+                            <li>REST API extraction</li>
+                            <li>CDI push to storage</li>
+                            <li>Optional event/webhook pattern</li>
+                        </ul>
+                    </div>
+                    <div class="article-detail-card">
+                        <span class="article-detail-num">03</span>
+                        <h3>Bronze Landing</h3>
+                        <p>Land raw DQ payloads in cloud object storage for traceability and replayability.</p>
+                        <ul>
+                            <li>ADLS / S3 / GCS</li>
+                            <li>JSON or Parquet</li>
+                            <li>Partition by run date and source</li>
+                        </ul>
+                    </div>
+                    <div class="article-detail-card">
+                        <span class="article-detail-num">04</span>
+                        <h3>Databricks Standardization</h3>
+                        <p>Normalize CDGC payloads into a standard enterprise score model.</p>
+                        <ul>
+                            <li>Map score dimensions</li>
+                            <li>Align domain semantics</li>
+                            <li>Prepare silver and gold models</li>
+                        </ul>
+                    </div>
+                    <div class="article-detail-card">
+                        <span class="article-detail-num">05</span>
+                        <h3>Unity Catalog Persistence</h3>
+                        <p>Persist curated score history into governed Delta tables inside Unity Catalog.</p>
+                        <ul>
+                            <li>Delta tables in UC</li>
+                            <li>Historical tracking</li>
+                            <li>Reusable enterprise score layer</li>
+                        </ul>
+                    </div>
+                    <div class="article-detail-card">
+                        <span class="article-detail-num">06</span>
+                        <h3>Governance Enrichment</h3>
+                        <p>Add tags, lineage, and metadata context to strengthen discoverability and trust.</p>
+                        <ul>
+                            <li>Quality status tags</li>
+                            <li>Lineage visibility</li>
+                            <li>Stewardship-ready metadata</li>
+                        </ul>
+                    </div>
+                    <div class="article-detail-card">
+                        <span class="article-detail-num">07</span>
+                        <h3>Business Consumption</h3>
+                        <p>Expose scorecards to business, governance, and engineering teams.</p>
+                        <ul>
+                            <li>Databricks SQL dashboards</li>
+                            <li>BI scorecards</li>
+                            <li>Trend and SLA monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="article-section article-at-a-glance">
+                <h2 class="article-h2">DrivenByData at a glance</h2>
+                <p class="article-prose">CDGC remains the execution engine for quality rules. Databricks becomes the integration and standardization layer. Unity Catalog becomes the governed trust layer for enterprise-wide visibility.</p>
+                <div class="article-glance-row">
+                    <div class="article-glance-cell"><strong>CDGC</strong><span>Run rules</span></div>
+                    <div class="article-glance-cell"><strong>Databricks</strong><span>Standardize scores</span></div>
+                    <div class="article-glance-cell"><strong>Unity Catalog</strong><span>Govern and publish</span></div>
+                </div>
+            </section>
+
+            <section class="article-section">
+                <h2 class="article-h2">Code examples</h2>
+                <div class="article-code-grid">
+                    <div class="article-code-block">
+                        <h3>Extract from CDGC API</h3>
+                        <pre><code>import requests
+
+url = "https://&lt;informatica-instance&gt;/api/v2/dq/results"
+headers = {"Authorization": "Bearer &lt;token&gt;"}
+response = requests.get(url, headers=headers)
+payload = response.json()</code></pre>
+                    </div>
+                    <div class="article-code-block">
+                        <h3>Standardize in Databricks</h3>
+                        <pre><code>df_clean = df_raw.selectExpr(
+  "assetName as table_name",
+  "score as overall_score",
+  "dimensionScores.completeness as completeness_score",
+  "dimensionScores.accuracy as accuracy_score",
+  "runDate as score_date"
+)</code></pre>
+                    </div>
+                    <div class="article-code-block">
+                        <h3>Persist in Unity Catalog</h3>
+                        <pre><code>CREATE TABLE governance.dq.table_quality_scores (
+  catalog_name STRING,
+  schema_name STRING,
+  table_name STRING,
+  score_date DATE,
+  overall_score DECIMAL(5,2),
+  status STRING,
+  source_system STRING,
+  run_id STRING
+) USING DELTA;</code></pre>
+                    </div>
+                    <div class="article-code-block">
+                        <h3>Apply tags</h3>
+                        <pre><code>ALTER TABLE main.sales.customer
+SET TAGS (
+  'dq_status' = 'gold',
+  'dq_score' = '97'
+);</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="article-section">
+                <div class="article-ownership-grid">
+                    <div class="article-ownership-card article-ownership-emerald">
+                        <h3>What CDGC owns</h3>
+                        <p>Rule execution, profiling logic, score calculation, and source-level quality assessment.</p>
+                    </div>
+                    <div class="article-ownership-card article-ownership-indigo">
+                        <h3>What Databricks owns</h3>
+                        <p>Ingestion, transformation, standardization, historical persistence, and downstream analytics.</p>
+                    </div>
+                    <div class="article-ownership-card article-ownership-teal">
+                        <h3>What Unity Catalog owns</h3>
+                        <p>Governance, access control, discoverability, metadata context, and trust signaling across the lakehouse.</p>
+                    </div>
+                </div>
+            </section>
+
+            <nav class="article-back">
+                <a href="../index.html#writings" class="secondary-button">← Back to Writings</a>
+            </nav>
+        </div>
+    </article>
+
+    <script src="../script.js"></script>
+</body>
+</html>
