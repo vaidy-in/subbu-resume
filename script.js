@@ -38,17 +38,19 @@ function configureHeader(currentPage) {
             }
         });
     } else if (currentPage === 'story' || currentPage === 'resume' || currentPage === 'article' || currentPage === 'my-work') {
-        // For subpages, hash links should go back to index.html with anchors
-        const prefix = currentPage === 'article' ? '../' : '';
+        // For subpages, hash links should go back to index.html with anchors.
+        // Articles under /writings/ need ../ for assets; root-level writing pages do not.
+        const inWritingsFolder = window.location.pathname.includes('/writings/');
+        const prefix = currentPage === 'article' && inWritingsFolder ? '../' : '';
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
             if (href.startsWith('#')) {
                 link.setAttribute('href', prefix + 'index.html' + href);
-            } else if (href === 'resume.html' && currentPage === 'article') {
+            } else if (href === 'resume.html' && currentPage === 'article' && inWritingsFolder) {
                 link.setAttribute('href', '../resume.html');
-            } else if (href === 'story.html' && currentPage === 'article') {
+            } else if (href === 'story.html' && currentPage === 'article' && inWritingsFolder) {
                 link.setAttribute('href', '../story.html');
-            } else if (href === 'my-work.html' && currentPage === 'article') {
+            } else if (href === 'my-work.html' && currentPage === 'article' && inWritingsFolder) {
                 link.setAttribute('href', '../my-work.html');
             }
         });
