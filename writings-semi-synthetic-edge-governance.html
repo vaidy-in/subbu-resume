@@ -44,13 +44,11 @@
       line-height: 1.65;
     }
 
-    .semi-synthetic-writing main a:not(.btn):not(.article-cta-btn),
-    .semi-synthetic-writing .breadcrumb a {
+    .semi-synthetic-writing main a:not(.btn):not(.article-cta-btn) {
       color: #4FD1C5;
       text-decoration: none;
     }
-    .semi-synthetic-writing main a:not(.btn):not(.article-cta-btn):hover,
-    .semi-synthetic-writing .breadcrumb a:hover {
+    .semi-synthetic-writing main a:not(.btn):not(.article-cta-btn):hover {
       color: #ED8936;
     }
     img { max-width: 100%; display: block; }
@@ -60,24 +58,8 @@
       margin: 0 auto;
     }
 
-
-    .breadcrumb {
-      color: var(--muted);
-      font-size: .9rem;
-      margin-bottom: 1rem;
-    }
-
-    .breadcrumb a {
-      font-weight: 500;
-    }
-
-    /* Match cdgc article hero: breadcrumb, then space, then arrow-chain kicker */
-    .semi-synthetic-writing .article-hero .breadcrumb {
-      margin-bottom: 0;
-    }
-
     .semi-synthetic-writing .article-hero .article-kicker {
-      margin-top: 2.5rem;
+      margin-top: 0;
       margin-bottom: 1rem;
       display: block;
     }
@@ -577,7 +559,6 @@
 
     @media (max-width: 640px) {
       .semi-synthetic-writing article { padding: 1.3rem; border-radius: 22px; }
-      .semi-synthetic-writing .article-hero .article-kicker { margin-top: 1.75rem; }
       .watermark { display: none; }
     }
   </style>
@@ -590,7 +571,6 @@
   <div class="page-container">
     <header class="article-hero">
       <div class="container article-hero-inner">
-        <div class="breadcrumb"><a href="index.html">Home</a> / <a href="index.html#writings">Writings</a> / Emerging Data Governance</div>
         <p class="article-kicker">Data Governance → AI Governance → Edge &amp; Synthetic Data</p>
         <h1 class="article-title">The Next Frontier of Data Governance Is Not Just About Data You Store. It’s About Data You Generate.</h1>
         <p class="article-lead">Through my work with one of the world’s largest beverage companies, I’ve seen a structural shift in governance: from static controls over enterprise data to dynamic governance of semi-synthetic data, edge decisioning, and AI-driven transformations.</p>
