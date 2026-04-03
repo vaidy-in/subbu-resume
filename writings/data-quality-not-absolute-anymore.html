@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'; frame-src https://www.youtube.com https://www.youtube-nocookie.com; object-src 'none'; upgrade-insecure-requests">
+  <title>Data Quality Is Not Absolute Anymore — Subramanian Gopalkrishnan</title>
+  <meta name="description" content="A DrivenByData.pro article on contextual data quality, in-flight governance, and modern trust signals across Informatica, Databricks, and Unity Catalog.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.drivenbydata.pro/writings/data-quality-not-absolute-anymore.html">
+  <meta property="og:title" content="Data Quality Is Not Absolute Anymore">
+  <meta property="og:description" content="Why modern data quality must be governed as contextual trust, not static validation.">
+  <meta property="og:image" content="https://www.drivenbydata.pro/images/hero-profile-og.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='10' fill='%231A202C'/><text x='50%' y='54%' dominant-baseline='central' text-anchor='middle' font-size='65' font-weight='600' font-family='Inter, sans-serif' fill='%23ED8936'>S</text></svg>">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="article">
+  <div id="header-placeholder"></div>
+
+  <article class="article-page page-container">
+    <header class="article-hero">
+      <div class="container article-hero-inner">
+        <p class="article-kicker">Informatica · Databricks · Unity Catalog · Contextual trust</p>
+        <h1 class="article-title">Data Quality Is Not Absolute Anymore</h1>
+        <p class="article-lead">
+          The biggest blind spot in modern governance is not poor data at rest. It is ungoverned data
+          <strong>in motion</strong>—data being transformed, re-scored, generated, and consumed before traditional controls ever see it.
+          This is where my work increasingly sits: between governance intent, engineering execution, and trust at scale.
+        </p>
+        <div class="article-tags">
+          <span>By Subramanian Gopalkrishnan</span>
+          <span>12 min read</span>
+          <span>Contextual trust model</span>
+          <span>In-flight data quality</span>
+          <span>Transformation integrity</span>
+          <span>Governed trust signals</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="container article-body">
+
+      <section class="article-section">
+        <div class="article-split">
+          <div class="article-panel">
+            <p class="article-label">Executive insight</p>
+            <h2 class="article-h2">Why the old definition breaks</h2>
+            <p class="article-prose">
+              Traditional data quality assumed that a dataset could be inspected, certified, and trusted as a finished object.
+              That model worked when data moved in slower batch cycles and governance lived primarily around warehouses, reports, and curated master records.
+            </p>
+            <p class="article-prose">
+              Modern platforms changed the operating model. In cloud-native pipelines, medallion architectures, dynamic transformations, AI-assisted workflows,
+              and distributed data products, quality is no longer a static label. It is a <span class="article-highlight">governed guarantee</span> that depends on:
+            </p>
+            <ul class="article-prose-list">
+              <li><strong>Context</strong> — who is using the data and for what decision</li>
+              <li><strong>Time</strong> — whether it is reliable inside the required decision window</li>
+              <li><strong>Transformation logic</strong> — what happened between source and outcome</li>
+              <li><strong>Provenance</strong> — whether the trust signals can be explained and traced</li>
+            </ul>
+            <div class="article-callout">
+              <strong>My view:</strong> the next phase of governance is not about cataloging more assets. It is about governing
+              <em>the quality of transformation itself</em>.
+            </div>
+          </div>
+
+          <aside class="article-panel article-panel-accent">
+            <p class="article-label">At a glance</p>
+            <div class="article-stat-grid article-stat-grid--2x2">
+              <div class="article-stat">
+                <div class="article-stat-label">Old model</div>
+                <div class="article-stat-value">Static</div>
+                <div class="article-stat-caption">Validate after data lands</div>
+              </div>
+              <div class="article-stat">
+                <div class="article-stat-label">New model</div>
+                <div class="article-stat-value">Dynamic</div>
+                <div class="article-stat-caption">Validate while data moves</div>
+              </div>
+              <div class="article-stat">
+                <div class="article-stat-label">Primary gap</div>
+                <div class="article-stat-value">In-flight</div>
+                <div class="article-stat-caption">Intermediate states are barely governed</div>
+              </div>
+              <div class="article-stat">
+                <div class="article-stat-label">Leadership need</div>
+                <div class="article-stat-value">Trust</div>
+                <div class="article-stat-caption">Explainable, auditable, context-aware</div>
+              </div>
+            </div>
+            <div class="article-soft-box">
+              <h4>Where this correlates with my work</h4>
+              <p>
+                In enterprise programs spanning Informatica, Databricks, Unity Catalog, metadata governance, and stewardship operating models,
+                I repeatedly see that organizations are strong at assessing outputs but weak at governing the transformations that create them.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-panel article-diagram">
+          <p class="article-label">Diagram 1</p>
+          <h2 class="article-h2">The shift from static quality to contextual trust</h2>
+          <svg viewBox="0 0 1080 520" width="100%" role="img" aria-label="Diagram showing the shift from static data quality to contextual trust">
+            <!-- Fills match .article-panel / .article-summary-panel / .article-insight-strip in style.css -->
+            <rect x="24" y="30" width="460" height="420" rx="28" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.2)"/>
+            <rect x="596" y="30" width="460" height="420" rx="28" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.2)"/>
+
+            <text x="54" y="76" fill="#4FD1C5" font-size="18" font-weight="700">Traditional model</text>
+            <text x="54" y="118" fill="#E2E8F0" font-size="34" font-weight="800">Data quality as a static label</text>
+
+            <rect x="54" y="154" width="400" height="68" rx="16" fill="rgba(0,0,0,0.2)" stroke="rgba(255,255,255,0.08)"/>
+            <text x="78" y="196" fill="#A0AEC0" font-size="22">Accurate • Complete • Consistent</text>
+
+            <rect x="54" y="248" width="400" height="146" rx="18" fill="rgba(237,137,54,0.08)" stroke="rgba(237,137,54,0.25)"/>
+            <text x="78" y="286" fill="#F7FAFC" font-size="20" font-weight="700">Governance assumption</text>
+            <text x="78" y="320" fill="#A0AEC0" font-size="18">Inspect data after it lands</text>
+            <text x="78" y="350" fill="#A0AEC0" font-size="18">Certify the stored object</text>
+            <text x="78" y="380" fill="#A0AEC0" font-size="18">Trust the final table or report</text>
+
+            <rect x="512" y="205" width="56" height="56" rx="28" fill="rgba(237,137,54,0.12)" stroke="rgba(237,137,54,0.35)"/>
+            <text x="529" y="242" fill="#F7FAFC" font-size="26" font-weight="800">→</text>
+
+            <text x="626" y="76" fill="#4FD1C5" font-size="18" font-weight="700">Modern model</text>
+            <text x="626" y="118" fill="#E2E8F0" font-size="34" font-weight="800">Data quality as contextual trust</text>
+
+            <rect x="626" y="154" width="390" height="68" rx="16" fill="rgba(0,0,0,0.2)" stroke="rgba(255,255,255,0.08)"/>
+            <text x="650" y="196" fill="#A0AEC0" font-size="21">Context × Time Window × Trust Signals</text>
+
+            <rect x="626" y="248" width="390" height="52" rx="16" fill="rgba(79,209,197,0.1)" stroke="rgba(79,209,197,0.28)"/>
+            <text x="650" y="281" fill="#E2E8F0" font-size="20" font-weight="700">1. Decision context</text>
+
+            <rect x="626" y="314" width="390" height="52" rx="16" fill="rgba(79,209,197,0.1)" stroke="rgba(79,209,197,0.28)"/>
+            <text x="650" y="347" fill="#E2E8F0" font-size="20" font-weight="700">2. Freshness and allowable lag</text>
+
+            <rect x="626" y="380" width="390" height="52" rx="16" fill="rgba(79,209,197,0.1)" stroke="rgba(79,209,197,0.28)"/>
+            <text x="650" y="413" fill="#E2E8F0" font-size="20" font-weight="700">3. Lineage, contracts, observability</text>
+          </svg>
+          <p class="article-diagram-caption">
+            The point is not that standards like accuracy and completeness stop mattering. The point is that they no longer operate alone.
+            They only become trustworthy when attached to decision context, timing, and explainable transformation history.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-flow-grid">
+          <div class="article-flow-card">
+            <p class="article-label">Blind spot 01</p>
+            <h3 class="article-h3">We validate the endpoints</h3>
+            <p class="article-prose">
+              Most enterprise scorecards still focus on source profiling or published dashboards. That creates a false sense of coverage.
+              The riskiest defects often emerge <strong>between</strong> those checkpoints.
+            </p>
+          </div>
+          <div class="article-flow-card">
+            <p class="article-label">Blind spot 02</p>
+            <h3 class="article-h3">We ignore transformation integrity</h3>
+            <p class="article-prose">
+              Business rules can be correctly designed and still behave incorrectly under real workload conditions, schema drift, late-arriving records, or orchestration gaps.
+            </p>
+          </div>
+          <div class="article-flow-card">
+            <p class="article-label">Blind spot 03</p>
+            <h3 class="article-h3">We trust AI outputs too quickly</h3>
+            <p class="article-prose">
+              AI-generated or AI-shaped data introduces probabilistic behavior. That means governance must look beyond validity and into provenance, traceability, and semantic fit.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <blockquote class="article-pullquote">
+          “The same dataset can be high quality for one use case and unsafe for another. That does not weaken governance. It makes governance more honest.”
+        </blockquote>
+      </section>
+
+      <section class="article-section">
+        <div class="article-split">
+          <div class="article-panel">
+            <p class="article-label">Deep insight</p>
+            <h2 class="article-h2">The missing dimension is transformation integrity</h2>
+            <p class="article-prose">
+              Enterprises have spent years institutionalizing the classic dimensions: accuracy, completeness, consistency, validity, uniqueness, timeliness.
+              Those are still foundational. But in modern architectures, they are not enough on their own because the business does not consume raw source truth.
+              It consumes <strong>transformed truth</strong>.
+            </p>
+            <p class="article-prose">
+              That means the actual governance question becomes:
+            </p>
+            <div class="article-callout">
+              Can I prove that the transformation logic, orchestration path, and decision window preserved the level of trust required for this specific use case?
+            </div>
+            <p class="article-prose">
+              This is exactly where data governance and data engineering need to stop operating as parallel functions.
+              In my work, the strongest implementations are the ones where stewardship expectations, metadata semantics, pipeline logic,
+              and access governance all converge into one operational trust layer.
+            </p>
+          </div>
+
+          <div class="article-panel">
+            <p class="article-label">What to measure</p>
+            <h3 class="article-h3">Transformation integrity checks</h3>
+            <ul class="article-prose-list">
+              <li>Rule execution coverage across critical transformation steps</li>
+              <li>Volume reconciliation before and after business rule application</li>
+              <li>Late-arriving data tolerance and business impact thresholds</li>
+              <li>Semantic drift between source meaning and output meaning</li>
+              <li>Lineage completeness for critical decision datasets</li>
+              <li>Human stewardship checkpoints for exception pathways</li>
+            </ul>
+            <div class="article-pill-row">
+              <span class="article-pill">Informatica quality rules</span>
+              <span class="article-pill">Databricks medallion flow</span>
+              <span class="article-pill">Unity Catalog trust signals</span>
+              <span class="article-pill">Metadata-driven accountability</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-panel article-diagram">
+          <p class="article-label">Diagram 2</p>
+          <h2 class="article-h2">Where modern data quality actually fails</h2>
+          <svg viewBox="0 0 1080 620" width="100%" role="img" aria-label="Diagram showing modern failure points in data quality across the data lifecycle">
+            <text x="40" y="54" fill="#E2E8F0" font-size="34" font-weight="800">Data in motion: the invisible risk layer</text>
+            <text x="40" y="88" fill="#A0AEC0" font-size="18">Most organizations govern the start and the end. The unstable trust zone is in the middle.</text>
+
+            <rect x="40" y="140" width="180" height="110" rx="24" fill="rgba(79,209,197,0.1)" stroke="rgba(79,209,197,0.25)"/>
+            <text x="76" y="188" fill="#F7FAFC" font-size="24" font-weight="800">Source</text>
+            <text x="76" y="220" fill="#A0AEC0" font-size="18">Profiled and known</text>
+
+            <rect x="280" y="140" width="220" height="110" rx="24" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.2)"/>
+            <text x="322" y="186" fill="#F7FAFC" font-size="24" font-weight="800">Transformation</text>
+            <text x="322" y="218" fill="#A0AEC0" font-size="18">Mapping • enrichment • business rules</text>
+
+            <rect x="560" y="140" width="220" height="110" rx="24" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.2)"/>
+            <text x="604" y="186" fill="#F7FAFC" font-size="24" font-weight="800">Orchestration</text>
+            <text x="604" y="218" fill="#A0AEC0" font-size="18">Timing • retries • dependencies</text>
+
+            <rect x="840" y="140" width="200" height="110" rx="24" fill="rgba(79,209,197,0.1)" stroke="rgba(79,209,197,0.25)"/>
+            <text x="886" y="188" fill="#F7FAFC" font-size="24" font-weight="800">Consumption</text>
+            <text x="886" y="220" fill="#A0AEC0" font-size="18">Dashboards • APIs • AI</text>
+
+            <line x1="220" y1="195" x2="280" y2="195" stroke="rgba(79,209,197,0.45)" stroke-width="6" stroke-linecap="round"/>
+            <line x1="500" y1="195" x2="560" y2="195" stroke="rgba(79,209,197,0.45)" stroke-width="6" stroke-linecap="round"/>
+            <line x1="780" y1="195" x2="840" y2="195" stroke="rgba(79,209,197,0.45)" stroke-width="6" stroke-linecap="round"/>
+
+            <rect x="250" y="310" width="560" height="240" rx="28" fill="rgba(237,137,54,0.06)" stroke="rgba(237,137,54,0.25)" stroke-dasharray="10 10"/>
+            <text x="292" y="356" fill="#4FD1C5" font-size="26" font-weight="800">The under-governed zone</text>
+
+            <rect x="292" y="390" width="220" height="54" rx="16" fill="rgba(237,137,54,0.1)" stroke="rgba(237,137,54,0.28)"/>
+            <text x="322" y="425" fill="#E2E8F0" font-size="20" font-weight="700">Intermediate states</text>
+
+            <rect x="548" y="390" width="220" height="54" rx="16" fill="rgba(237,137,54,0.1)" stroke="rgba(237,137,54,0.28)"/>
+            <text x="579" y="425" fill="#E2E8F0" font-size="20" font-weight="700">Late data behavior</text>
+
+            <rect x="292" y="466" width="220" height="54" rx="16" fill="rgba(237,137,54,0.1)" stroke="rgba(237,137,54,0.28)"/>
+            <text x="336" y="501" fill="#E2E8F0" font-size="20" font-weight="700">Logic drift</text>
+
+            <rect x="548" y="466" width="220" height="54" rx="16" fill="rgba(237,137,54,0.1)" stroke="rgba(237,137,54,0.28)"/>
+            <text x="572" y="501" fill="#E2E8F0" font-size="20" font-weight="700">AI output variance</text>
+          </svg>
+          <p class="article-diagram-caption">
+            This is the exact gap I see in enterprise programs: quality frameworks are mature at the source and visible at the endpoint,
+            but transformation behavior, time-sensitive reconciliation, and in-flight drift are governed inconsistently.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Area</th>
+                <th>Traditional assumption</th>
+                <th>Modern reality</th>
+                <th>What leaders should do</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Completeness</strong></td>
+                <td>All required fields are present</td>
+                <td>Completeness depends on event time, late-arriving data, and decision cutoff</td>
+                <td>Define completeness with an explicit time window and allowable lag</td>
+              </tr>
+              <tr>
+                <td><strong>Accuracy</strong></td>
+                <td>Source-to-target match proves correctness</td>
+                <td>Transformation logic can reshape data without obvious defects</td>
+                <td>Measure transformation integrity, not just source conformance</td>
+              </tr>
+              <tr>
+                <td><strong>Consistency</strong></td>
+                <td>Systems agree after batch load</td>
+                <td>Distributed pipelines can temporarily disagree while still being operationally valid</td>
+                <td>Differentiate transient inconsistency from control failure</td>
+              </tr>
+              <tr>
+                <td><strong>Trust</strong></td>
+                <td>A certified dataset is trustworthy</td>
+                <td>Trust now depends on lineage, contracts, runtime behavior, and context</td>
+                <td>Publish trust signals alongside the data, not after the fact</td>
+              </tr>
+              <tr>
+                <td><strong>AI-readiness</strong></td>
+                <td>Schema-valid data is sufficient</td>
+                <td>AI workflows require provenance, prompt awareness, and semantic controls</td>
+                <td>Treat generated outputs as governed artifacts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-panel">
+          <p class="article-label">A practical operating model</p>
+          <h2 class="article-h2">The contextual trust framework I would apply</h2>
+          <p class="article-prose">
+            This is the model I believe modern enterprises need—especially those already investing in governed lakehouse architectures,
+            metadata platforms, and enterprise-quality operating models.
+          </p>
+
+          <div class="article-framework-steps">
+            <div class="article-framework-step">
+              <div class="article-framework-step-num">1</div>
+              <h3 class="article-h3">Define the decision context</h3>
+              <p class="article-prose">
+                Start with the business decision, not the table. The trust threshold for regulatory reporting, supply chain alerts,
+                and executive analytics should not be assumed to be the same.
+              </p>
+            </div>
+            <div class="article-framework-step">
+              <div class="article-framework-step-num">2</div>
+              <h3 class="article-h3">Govern the data in motion</h3>
+              <p class="article-prose">
+                Introduce in-flight checkpoints inside pipelines, not only after publishing. Intermediate datasets should have explicit validation and exception behavior.
+              </p>
+            </div>
+            <div class="article-framework-step">
+              <div class="article-framework-step-num">3</div>
+              <h3 class="article-h3">Publish trust as metadata</h3>
+              <p class="article-prose">
+                Trust signals should travel with the asset: quality score, steward, lineage state, transformation version,
+                freshness window, and policy context.
+              </p>
+            </div>
+          </div>
+
+          <div class="article-soft-box">
+            <h4>Why this matters for my domain of work</h4>
+            <p>
+              This model aligns naturally with the kinds of platforms I work across: Informatica for quality execution and metadata governance,
+              Databricks for scalable transformation and data product implementation, and Unity Catalog for governed access, discoverability, and reusable trust signaling.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-flow-grid">
+          <div class="article-flow-card">
+            <p class="article-label">Implementation lens</p>
+            <h3 class="article-h3">Informatica</h3>
+            <p class="article-prose">
+              Remains powerful for rule execution, profiling, stewardship workflows, glossary alignment, and metadata-driven accountability.
+              But its real value expands when those trust outputs are operationalized downstream.
+            </p>
+          </div>
+          <div class="article-flow-card">
+            <p class="article-label">Implementation lens</p>
+            <h3 class="article-h3">Databricks</h3>
+            <p class="article-prose">
+              Provides the transformation and standardization layer where in-flight quality must be observed, measured,
+              reconciled, and persisted in a way the enterprise can act on.
+            </p>
+          </div>
+          <div class="article-flow-card">
+            <p class="article-label">Implementation lens</p>
+            <h3 class="article-h3">Unity Catalog</h3>
+            <p class="article-prose">
+              Becomes more valuable when governance is not just about access and lineage, but about surfacing trustworthy context
+              that consumers can actually interpret at the point of use.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-insight-strip">
+          <p class="article-prose">
+            <strong>The real evolution in data quality is not from rules to dashboards.</strong>
+            It is from passive measurement to <strong>operational trust engineering</strong>.
+            That is the space where governance, quality, metadata, and platform design finally start working as one discipline.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-at-a-glance">
+          <h3 class="article-h3">About the author</h3>
+          <p class="article-prose">
+            I help organizations turn governance from a policy layer into an operating model—connecting data quality,
+            metadata, stewardship, platform architecture, and trusted consumption across modern cloud ecosystems.
+          </p>
+          <p class="article-prose article-prose--tight">
+            My work has consistently focused on the point where business trust breaks down: not only in bad source data,
+            but in weak transformation controls, disconnected metadata, and ungoverned decision pipelines.
+          </p>
+          <div class="article-author-actions">
+            <a href="../index.html#contact" class="article-cta-btn article-cta-btn--primary">Connect</a>
+            <a href="../story.html" class="article-cta-btn article-cta-btn--secondary">Read My Story</a>
+            <a href="../index.html#writings" class="article-cta-btn article-cta-btn--secondary">More Writings</a>
+          </div>
+        </div>
+      </section>
+
+      <nav class="article-back">
+        <a href="../index.html#writings" class="secondary-button">← Back to Writings</a>
+      </nav>
+    </div>
+  </article>
+
+  <script src="../script.js"></script>
+</body>
+</html>
