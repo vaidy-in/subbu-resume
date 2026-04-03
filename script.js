@@ -417,8 +417,8 @@ window.addEventListener('scroll', throttledScroll);
 
 function downloadResumePDF() {
     const link = document.createElement('a');
-    link.href = 'resume/Subu- Data Governance & Engineering Manager One-Pager CV.pdf';
-    link.download = 'Subu-Data-Governance-Engineering-Manager-One-Pager-CV.pdf';
+    link.href = 'resume/Subu - Data Quality and Data Governance Leader One-Pager CV.pdf';
+    link.download = 'Subu-Data-Quality-and-Data-Governance-Leader-One-Pager-CV.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const openResumePdfBtn = document.getElementById('btn-open-resume-pdf');
     if (openResumePdfBtn) {
         openResumePdfBtn.addEventListener('click', function() {
-            window.open('resume/Subu- Data Governance & Engineering Manager One-Pager CV.pdf', '_blank');
+            window.open('resume/Subu - Data Quality and Data Governance Leader One-Pager CV.pdf', '_blank');
         });
     }
 

@@ -13,7 +13,7 @@ Data Governance Leader and Data Architect
 ---
 
 ## Brief Summary
-*   **Accomplished Data Governance Leader and Architect** with over **18 years of experience** delivering enterprise-wide data strategies across **utilities, healthcare, and life sciences** industries.
+*   **Accomplished Data Governance Leader and Architect** with **18+ years of experience** delivering enterprise-wide data strategies across **utilities, healthcare, and life sciences** industries.
 *   **Proven expertise** in designing and implementing **scalable data governance frameworks, modern data architectures, and AI-enabled platforms** to support organizational transformation.
 *   **Skilled in cross-functional leadership** and driving **regulatory compliance** initiatives.
 *   **Adept at transforming complex datasets into actionable business insights** that improve decision-making and operational efficiency.
