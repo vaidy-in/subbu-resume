@@ -2372,3 +2372,28 @@ ul.article-prose-list li {
     margin-bottom: 0;
 }
 
+/*
+ * Article in-page TOC (e.g. Behavioral data piece): browsers often paint default
+ * link blue for #fragment URLs; force on-theme colors so dark panels stay readable.
+ */
+a.article-toc-link,
+a.article-toc-link:link,
+a.article-toc-link:visited,
+a.article-toc-link:any-link {
+    color: #F7FAFC !important;
+    -webkit-text-fill-color: #F7FAFC !important;
+    text-decoration: none !important;
+    border-bottom: 1px dashed rgba(79, 209, 197, 0.45) !important;
+}
+
+a.article-toc-link:hover {
+    color: #81E6D9 !important;
+    -webkit-text-fill-color: #81E6D9 !important;
+    border-bottom-color: rgba(129, 230, 217, 0.9) !important;
+}
+
+a.article-toc-link:focus-visible {
+    outline: 2px solid rgba(79, 209, 197, 0.85);
+    outline-offset: 2px;
+}
+
