@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'; frame-src https://www.youtube.com https://www.youtube-nocookie.com; object-src 'none'; upgrade-insecure-requests">
+  <title>Behavioral Data and Trust in Motion — Subramanian Gopalkrishnan</title>
+  <meta name="description" content="A DrivenByData.pro article on behavioral data, synthetic data's next chapter, and governing trust in motion across retrieval, AI execution, and decisions.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.drivenbydata.pro/writings/behavioral-data-trust-in-motion.html">
+  <meta property="og:title" content="Behavioral Data: The Shift Beyond Synthetic Data">
+  <meta property="og:description" content="Why the next frontier is not only generated data—but data whose meaning and trust are shaped in motion by context, retrieval, and AI behavior.">
+  <meta property="og:image" content="https://www.drivenbydata.pro/images/hero-profile-og.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='10' fill='%231A202C'/><text x='50%' y='54%' dominant-baseline='central' text-anchor='middle' font-size='65' font-weight='600' font-family='Inter, sans-serif' fill='%23ED8936'>S</text></svg>">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="article">
+  <div id="header-placeholder"></div>
+
+  <article class="article-page page-container">
+    <header class="article-hero">
+      <div class="container article-hero-inner">
+        <p class="article-kicker">Synthetic data · Behavioral data · Trust in motion</p>
+        <h1 class="article-title">Behavioral Data: The Shift Beyond Synthetic Data</h1>
+        <p class="article-lead">
+          Synthetic data changed how we think about what data is. But AI systems are now forcing a deeper rethink:
+          data is no longer only stored and governed. It is assembled, transformed, interpreted, and acted on <strong>in motion</strong>.
+        </p>
+        <div class="article-tags">
+          <span>By Subramanian Gopalkrishnan</span>
+          <span>12 min read</span>
+          <span>Data governance</span>
+          <span>Decision trust</span>
+          <span>Runtime observability</span>
+          <span>AI engineering</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="container article-body">
+
+      <section class="article-section">
+        <div class="article-split">
+          <div class="article-panel">
+            <p class="article-label">From synthetic to behavioral</p>
+            <p class="article-prose">
+              Synthetic data is still a major shift. It challenged the long-standing assumption that enterprise data must be captured from the physical world to be valuable.
+              But what I see emerging now is a deeper and less discussed transformation: <span class="article-highlight">data is becoming behavioral</span>.
+            </p>
+            <blockquote class="article-pullquote">
+              The next frontier is not just generated data. It is <strong>data whose meaning, quality, and impact are shaped in real time by context, retrieval, transformation logic, and AI behavior.</strong>
+            </blockquote>
+          </div>
+          <aside class="article-panel article-panel-accent">
+            <p class="article-label">Topics</p>
+            <ul class="article-summary-list">
+              <li><a href="#why-this-matters">Why this matters now</a></li>
+              <li><a href="#behavioral-data">What is behavioral data?</a></li>
+              <li><a href="#where-traditional-governance-breaks">Where traditional governance breaks</a></li>
+              <li><a href="#new-shift">From data quality to decision quality</a></li>
+              <li><a href="#architecture">Trust in Motion architecture</a></li>
+              <li><a href="#operating-model">A practical operating model</a></li>
+              <li><a href="#why-few-people-are-discussing">Why it is under-discussed</a></li>
+              <li><a href="#closing">Governing data in motion</a></li>
+            </ul>
+            <div class="article-soft-box">
+              <h4>Trust in motion</h4>
+              <p>
+                <strong>Trust in Motion</strong> — governing data, context, and decisions in AI systems where runtime behavior shapes outcomes as much as source records do.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="article-section" id="why-this-matters">
+        <div class="article-panel">
+          <p class="article-label">Determinism vs. adaptation</p>
+          <h2 class="article-h2">Why this matters now</h2>
+          <p class="article-prose">
+            Traditional governance programs were built for a world where data moved through predictable stages:
+            it was created, stored, modeled, integrated, and then governed through ownership, lineage, cataloging, and quality rules.
+            That model worked because the system itself was mostly deterministic.
+          </p>
+          <p class="article-prose">
+            AI systems change that. A retrieval layer changes context at runtime. A prompt changes how the same information is interpreted.
+            An agent can decide which tool to use, which source to trust, and which action to take. The data path is no longer enough.
+            We also need visibility into the <strong>decision path</strong>.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-panel article-diagram">
+          <p class="article-label">Static · Synthetic · Behavioral</p>
+          <h2 class="article-h2">The evolution of enterprise data thinking</h2>
+          <svg viewBox="0 0 1040 368" width="100%" text-rendering="optimizeLegibility" role="img" aria-label="Three eras: static data, synthetic data, and behavioral data">
+            <defs>
+              <linearGradient id="bd-g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#4FD1C5"/>
+                <stop offset="100%" stop-color="#ED8936"/>
+              </linearGradient>
+            </defs>
+            <!-- Taller + slightly wider panels for 15px body / 18px titles (article-scale type) -->
+            <rect x="16" y="36" rx="22" ry="22" width="312" height="268" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+            <rect x="364" y="36" rx="22" ry="22" width="312" height="268" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+            <rect x="712" y="36" rx="22" ry="22" width="312" height="268" fill="rgba(255,255,255,0.04)" stroke="rgba(237,137,54,0.3)"/>
+
+            <text x="36" y="70" fill="#81E6D9" font-size="18" font-weight="700" font-family="Inter, system-ui, sans-serif">1. Static Data Era</text>
+            <text font-size="15" fill="#E2E8F0" font-weight="500" font-family="Inter, system-ui, sans-serif">
+              <tspan x="36" y="104">• Data captured and stored</tspan>
+              <tspan x="36" y="130">• Governance focused on datasets</tspan>
+              <tspan x="36" y="156">• Lineage tracked table movement</tspan>
+              <tspan x="36" y="182">• Quality measured at rest</tspan>
+            </text>
+
+            <text x="384" y="70" fill="#4FD1C5" font-size="18" font-weight="700" font-family="Inter, system-ui, sans-serif">2. Synthetic Data Era</text>
+            <text font-size="15" fill="#E2E8F0" font-weight="500" font-family="Inter, system-ui, sans-serif">
+              <tspan x="384" y="104">• Data generated, not only</tspan>
+              <tspan x="384" y="130">collected</tspan>
+              <tspan x="384" y="156">• Realism and representativeness</tspan>
+              <tspan x="384" y="182">matter</tspan>
+              <tspan x="384" y="208">• Quality shifts from source to</tspan>
+              <tspan x="384" y="234">simulation</tspan>
+              <tspan x="384" y="260">• Governance expands beyond</tspan>
+              <tspan x="384" y="286">origin</tspan>
+            </text>
+
+            <text x="732" y="70" fill="#ED8936" font-size="18" font-weight="700" font-family="Inter, system-ui, sans-serif">3. Behavioral Data Era</text>
+            <text font-size="15" fill="#E2E8F0" font-weight="500" font-family="Inter, system-ui, sans-serif">
+              <tspan x="732" y="104">• Data assembled in-flight</tspan>
+              <tspan x="732" y="130">• Context changes meaning at</tspan>
+              <tspan x="732" y="156">runtime</tspan>
+              <tspan x="732" y="182">• Same input can lead to</tspan>
+              <tspan x="732" y="208">different outputs</tspan>
+              <tspan x="732" y="234">• Trust must be measured on</tspan>
+              <tspan x="732" y="260">decisions</tspan>
+            </text>
+
+            <line x1="328" y1="170" x2="364" y2="170" stroke="url(#bd-g1)" stroke-width="4"/>
+            <polygon points="364,170 349,161 349,179" fill="#81E6D9"/>
+            <line x1="676" y1="170" x2="712" y2="170" stroke="url(#bd-g1)" stroke-width="4"/>
+            <polygon points="712,170 697,161 697,179" fill="#81E6D9"/>
+          </svg>
+        </div>
+      </section>
+
+      <section class="article-section" id="behavioral-data">
+        <div class="article-panel">
+          <p class="article-label">Assembly, context, and outcomes</p>
+          <h2 class="article-h2">What is behavioral data?</h2>
+          <p class="article-prose">
+            Behavioral data is not a new file format, platform, or product category. It is a way to describe a new operating reality.
+            In AI-driven systems, the “data” behind an outcome may be:
+          </p>
+          <ul class="article-prose-list">
+            <li>retrieved dynamically from different sources at runtime,</li>
+            <li>re-ranked or filtered based on user identity, context, or policy,</li>
+            <li>summarized, expanded, rewritten, or combined by models,</li>
+            <li>used once in a decision and never persist in that exact form again.</li>
+          </ul>
+          <p class="article-prose">
+            That means the old question, <em>“Is this dataset accurate?”</em>, is necessary but no longer sufficient.
+            The more relevant question becomes: <strong>“Was the path to this answer trustworthy?”</strong>
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section" id="where-traditional-governance-breaks">
+        <div class="article-panel">
+          <p class="article-label">Assumptions vs. AI-era reality</p>
+          <h2 class="article-h2">Where traditional governance starts to break</h2>
+          <p class="article-prose">
+            Traditional data governance is excellent at establishing control over data assets. But behavioral AI systems expose several blind spots:
+          </p>
+          <div class="article-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Traditional assumption</th>
+                  <th>What changes in AI systems</th>
+                  <th>Why it matters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Data exists as a stable record</td>
+                  <td>Context is assembled dynamically at runtime</td>
+                  <td>Quality must be evaluated during execution, not only before or after</td>
+                </tr>
+                <tr>
+                  <td>Lineage tracks movement across tables and jobs</td>
+                  <td>Decision-making depends on prompts, retrieval, ranking, and model behavior</td>
+                  <td>Lineage must capture behavior, not only movement</td>
+                </tr>
+                <tr>
+                  <td>Rules validate known fields against known expectations</td>
+                  <td>Outputs are probabilistic and context-sensitive</td>
+                  <td>Validation must include groundedness, relevance, and decision confidence</td>
+                </tr>
+                <tr>
+                  <td>Governance operates outside the pipeline</td>
+                  <td>AI systems change behavior inside the pipeline</td>
+                  <td>Governance must become operational and embedded</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="article-insight-strip">
+            <p class="article-prose">
+              <strong>Key idea:</strong> In AI-era systems, trust is no longer only a property of data assets. It is increasingly a property of runtime behavior.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="new-shift">
+        <div class="article-panel">
+          <p class="article-label">Dataset quality is not enough</p>
+          <h2 class="article-h2">The new shift: from data quality to decision quality</h2>
+          <p class="article-prose">
+            This is the shift I believe leaders in data engineering and governance need to make:
+          </p>
+          <div class="article-detail-grid">
+            <div class="article-detail-card">
+              <span class="article-detail-num">Layer</span>
+              <h3 class="article-h3">Data quality</h3>
+              <p>Are the fields complete, accurate, timely, and valid?</p>
+            </div>
+            <div class="article-detail-card">
+              <span class="article-detail-num">Layer</span>
+              <h3 class="article-h3">Context quality</h3>
+              <p>Was the right information retrieved, filtered, and assembled for the situation?</p>
+            </div>
+            <div class="article-detail-card">
+              <span class="article-detail-num">Layer</span>
+              <h3 class="article-h3">Transformation quality</h3>
+              <p>Were the model, prompt, retrieval logic, and policies applied consistently?</p>
+            </div>
+            <div class="article-detail-card">
+              <span class="article-detail-num">Layer</span>
+              <h3 class="article-h3">Decision quality</h3>
+              <p>Was the resulting answer or action trustworthy, explainable, and appropriate?</p>
+            </div>
+          </div>
+          <p class="article-prose">
+            This does not replace classic data quality. It extends it.
+            In fact, organizations that already have strong foundations in metadata, lineage, stewardship, and engineering standards are best positioned to lead this shift.
+            But the operating model must evolve.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section" id="architecture">
+        <div class="article-panel">
+          <p class="article-label">End-to-end trust design</p>
+          <h2 class="article-h2">What this means architecturally</h2>
+          <p class="article-prose">
+            In a behavioral data architecture, trust must be designed as an end-to-end capability. That means:
+          </p>
+          <ul class="article-prose-list">
+            <li>source trust and policy classification at ingestion,</li>
+            <li>observability across retrieval, transformation, and model execution,</li>
+            <li>lineage that ties responses back to context, logic, and policy decisions,</li>
+            <li>runtime controls that detect drift, misuse, or low-confidence behavior before outcomes are acted upon.</li>
+          </ul>
+        </div>
+        <div class="article-panel article-diagram">
+          <p class="article-label">Pipeline, observability, outcomes</p>
+          <h3 class="article-h3">Trust in Motion architecture</h3>
+          <svg viewBox="0 0 1080 560" width="100%" text-rendering="optimizeLegibility" role="img" aria-label="Layers from source systems through AI transformation to outcomes, with a trust in motion observability band">
+            <defs>
+              <linearGradient id="bd-g2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#4FD1C5"/>
+                <stop offset="100%" stop-color="#ED8936"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Top row: labels centered; secondary line matches article body contrast -->
+            <rect x="40" y="50" rx="18" ry="18" width="170" height="92" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+            <rect x="250" y="50" rx="18" ry="18" width="170" height="92" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+            <rect x="460" y="50" rx="18" ry="18" width="170" height="92" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+            <rect x="670" y="50" rx="18" ry="18" width="170" height="92" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+            <rect x="880" y="50" rx="18" ry="18" width="160" height="92" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+
+            <text text-anchor="middle" x="125" y="78" fill="#F7FAFC" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">Source Systems</text>
+            <text text-anchor="middle" x="125" y="100" fill="#E2E8F0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Docs • Tables • APIs</text>
+
+            <text text-anchor="middle" x="335" y="78" fill="#F7FAFC" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">Ingestion + Policy</text>
+            <text text-anchor="middle" x="335" y="100" fill="#E2E8F0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Classify • Redact • Tag</text>
+
+            <text text-anchor="middle" x="545" y="78" fill="#F7FAFC" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">Context Assembly</text>
+            <text text-anchor="middle" x="545" y="100" fill="#E2E8F0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Retrieve • Rank • Filter</text>
+
+            <text text-anchor="middle" x="755" y="78" fill="#F7FAFC" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">AI Transformation</text>
+            <text text-anchor="middle" x="755" y="100" fill="#E2E8F0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Prompt • Model • Agent</text>
+
+            <text text-anchor="middle" x="960" y="78" fill="#F7FAFC" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">Decision Layer</text>
+            <text text-anchor="middle" x="960" y="100" fill="#E2E8F0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Answer • Action • Alert</text>
+
+            <line x1="210" y1="96" x2="250" y2="96" stroke="url(#bd-g2)" stroke-width="4"/>
+            <polygon points="250,96 236,87 236,105" fill="#81E6D9"/>
+            <line x1="420" y1="96" x2="460" y2="96" stroke="url(#bd-g2)" stroke-width="4"/>
+            <polygon points="460,96 446,87 446,105" fill="#81E6D9"/>
+            <line x1="630" y1="96" x2="670" y2="96" stroke="url(#bd-g2)" stroke-width="4"/>
+            <polygon points="670,96 656,87 656,105" fill="#81E6D9"/>
+            <line x1="840" y1="96" x2="880" y2="96" stroke="url(#bd-g2)" stroke-width="4"/>
+            <polygon points="880,96 866,87 866,105" fill="#81E6D9"/>
+
+            <!-- Trust band -->
+            <rect x="100" y="234" rx="22" ry="22" width="880" height="138" fill="rgba(79,209,197,0.08)" stroke="rgba(79,209,197,0.35)"/>
+            <text x="125" y="264" fill="#81E6D9" font-size="20" font-weight="700" font-family="Inter, system-ui, sans-serif">Trust in Motion Layer</text>
+            <text font-size="14" fill="#E2E8F0" font-weight="500" font-family="Inter, system-ui, sans-serif">
+              <tspan x="125" y="292">Observability • Runtime policies • Traceable lineage •</tspan>
+              <tspan x="125" y="312">Confidence metrics • Quality signals • Feedback loops</tspan>
+            </text>
+            <text font-size="13" fill="#CBD5E0" font-weight="500" font-family="Inter, system-ui, sans-serif">
+              <tspan x="125" y="338">This layer turns a black-box AI pipeline into a governed,</tspan>
+              <tspan x="125" y="356">measurable, replayable decision system.</tspan>
+            </text>
+
+            <line x1="125" y1="142" x2="125" y2="234" stroke="#4FD1C5" stroke-width="3" stroke-dasharray="6 6" opacity="0.7"/>
+            <line x1="335" y1="142" x2="335" y2="234" stroke="#4FD1C5" stroke-width="3" stroke-dasharray="6 6" opacity="0.7"/>
+            <line x1="545" y1="142" x2="545" y2="234" stroke="#4FD1C5" stroke-width="3" stroke-dasharray="6 6" opacity="0.7"/>
+            <line x1="755" y1="142" x2="755" y2="234" stroke="#4FD1C5" stroke-width="3" stroke-dasharray="6 6" opacity="0.7"/>
+            <line x1="960" y1="142" x2="960" y2="234" stroke="#4FD1C5" stroke-width="3" stroke-dasharray="6 6" opacity="0.7"/>
+
+            <!-- Bottom outcomes -->
+            <rect x="80" y="408" rx="18" ry="18" width="260" height="124" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+            <rect x="410" y="408" rx="18" ry="18" width="260" height="124" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+            <rect x="740" y="408" rx="18" ry="18" width="260" height="124" fill="rgba(255,255,255,0.04)" stroke="rgba(79,209,197,0.25)"/>
+
+            <text text-anchor="middle" x="210" y="440" fill="#F7FAFC" font-size="15" font-weight="700" font-family="Inter, system-ui, sans-serif">Governance Outcomes</text>
+            <text text-anchor="middle" x="210" y="466" fill="#E2E8F0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Ownership • Stewardship • Controls</text>
+            <text text-anchor="middle" x="210" y="490" fill="#CBD5E0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Policy enforcement</text>
+            <text text-anchor="middle" x="210" y="508" fill="#CBD5E0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">in execution</text>
+
+            <text text-anchor="middle" x="540" y="440" fill="#F7FAFC" font-size="15" font-weight="700" font-family="Inter, system-ui, sans-serif">Engineering Outcomes</text>
+            <text text-anchor="middle" x="540" y="466" fill="#E2E8F0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Replayability • MTTR reduction</text>
+            <text text-anchor="middle" x="540" y="498" fill="#CBD5E0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Drift detection • Operational trust</text>
+
+            <text text-anchor="middle" x="870" y="440" fill="#F7FAFC" font-size="15" font-weight="700" font-family="Inter, system-ui, sans-serif">Business Outcomes</text>
+            <text text-anchor="middle" x="870" y="466" fill="#E2E8F0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Trusted decisions • Safer AI</text>
+            <text text-anchor="middle" x="870" y="490" fill="#CBD5E0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">Confidence in real-time</text>
+            <text text-anchor="middle" x="870" y="508" fill="#CBD5E0" font-size="13" font-weight="500" font-family="Inter, system-ui, sans-serif">action</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="article-section" id="operating-model">
+        <div class="article-panel">
+          <p class="article-label">Lineage, context, runtime metrics</p>
+          <h2 class="article-h2">A practical operating model</h2>
+          <p class="article-prose">
+            For organizations trying to operationalize this idea, I see five practical moves:
+          </p>
+          <h3 class="article-h3">1. Expand lineage from data movement to decision movement</h3>
+          <p class="article-prose">
+            Capture not only what table or document a result came from, but also what retrieval logic, prompt version, ranking rule, and runtime policy shaped it.
+          </p>
+
+          <h3 class="article-h3">2. Treat context as a governed asset</h3>
+          <p class="article-prose">
+            In AI systems, context is often more decisive than raw source data. That means retrieval logic, semantic filters, embeddings, and prompt templates need ownership and change control.
+          </p>
+
+          <h3 class="article-h3">3. Move quality checks into runtime</h3>
+          <p class="article-prose">
+            Batch profiling is still useful, but it is not enough. Runtime systems need observability that can detect low-confidence retrieval, contradictory context, stale knowledge, or unsafe output patterns.
+          </p>
+
+          <h3 class="article-h3">4. Build decision-level feedback loops</h3>
+          <p class="article-prose">
+            The best signal for trust is often downstream. Did the answer help? Was it escalated? Was it overridden? Was it later found to be inconsistent with policy? These signals must feed continuous improvement.
+          </p>
+
+          <h3 class="article-h3">5. Measure trust explicitly</h3>
+          <p class="article-prose">
+            Teams need operational metrics that connect data, AI, and governance. Examples include:
+          </p>
+          <ul class="article-prose-list">
+            <li>percent of responses with traceable source and policy context,</li>
+            <li>response groundedness against retrieved sources,</li>
+            <li>retrieval freshness for policy-sensitive domains,</li>
+            <li>rate of overrides, escalations, or confidence-based suppression.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="article-section" id="why-few-people-are-discussing">
+        <div class="article-panel">
+          <p class="article-label">Surface hype, substrate risk</p>
+          <h2 class="article-h2">Why this is still under-discussed</h2>
+          <p class="article-prose">
+            The market is still heavily focused on visible layers: models, copilots, agents, and prompts.
+            But the deeper trust problem sits underneath those experiences, inside the runtime interaction between data engineering, governance, and AI execution.
+          </p>
+          <p class="article-prose">
+            That is exactly why this matters. The organizations that understand this early will not just have better AI.
+            They will have more defensible decisions, faster incident diagnosis, stronger operational trust, and more mature governance in the places where it now matters most.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section" id="closing">
+        <div class="article-panel">
+          <p class="article-label">At rest vs. in motion</p>
+          <h2 class="article-h2">Governing data in motion</h2>
+          <p class="article-prose">
+            Synthetic data was an important signal. It told us data no longer has to be directly captured to be valuable.
+            But behavioral data tells us something even more important:
+          </p>
+          <blockquote class="article-pullquote">
+            We are no longer only governing data at rest. We are governing <strong>how data behaves in motion</strong> — and how that behavior shapes decisions.
+          </blockquote>
+          <p class="article-prose">
+            That is the next frontier for data governance, data quality, and AI architecture.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-panel">
+          <p class="article-label">Standards, law, open tooling</p>
+          <h3 class="article-h3">References</h3>
+          <ol style="margin:0 0 1.25rem; padding-left:1.35rem; color:#CBD5E0; line-height:1.75;">
+            <li>NIST AI Risk Management Framework (AI RMF 1.0)</li>
+            <li>NIST Generative AI Profile</li>
+            <li>EU AI Act — data governance, logging, and accountability requirements</li>
+            <li>ISO/IEC 42001 and ISO/IEC 23894</li>
+            <li>OpenLineage and OpenTelemetry guidance for lineage and runtime observability</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-at-a-glance">
+          <h3 class="article-h3">About the author</h3>
+          <p class="article-prose">
+            I help organizations turn governance from a policy layer into an operating model—connecting data quality,
+            metadata, stewardship, platform architecture, and trusted consumption across modern cloud ecosystems.
+          </p>
+          <p class="article-prose article-prose--tight">
+            My work has consistently focused on the point where business trust breaks down: not only in bad source data,
+            but in weak transformation controls, disconnected metadata, and ungoverned decision pipelines.
+          </p>
+          <div class="article-author-actions">
+            <a href="../index.html#contact" class="article-cta-btn article-cta-btn--primary">Connect</a>
+            <a href="../story.html" class="article-cta-btn article-cta-btn--secondary">Read My Story</a>
+            <a href="../index.html#writings" class="article-cta-btn article-cta-btn--secondary">More Writings</a>
+          </div>
+        </div>
+      </section>
+
+      <nav class="article-back">
+        <a href="../index.html#writings" class="secondary-button">← Back to Writings</a>
+      </nav>
+    </div>
+  </article>
+
+  <script src="../script.js"></script>
+</body>
+</html>
