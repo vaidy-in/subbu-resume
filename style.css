@@ -2408,8 +2408,22 @@ a.article-toc-link:focus-visible {
 }
 
 /* Tiger private deck: wider main column next to TOC */
+/* Entire gains block: section can widen past viewport on small screens without this */
+.article-section#gains {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.article-split.article-split--tiger-gains {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .article-split.article-split--tiger-gains > .article-panel {
     min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 @media (min-width: 1024px) {
@@ -2492,17 +2506,16 @@ a.article-toc-link:focus-visible {
 }
 
 /* What Tiger gains: circular knobs + captions (private Tiger deck)
-   One horizontal row of four equal columns so the 4th item never sits “below” the others;
-   equal-height cells + fixed eyebrow band so all knobs share the same baseline. */
+   CSS Grid minmax(0,1fr) clamps column width so captions wrap inside the panel (flex min-width:auto was still overflowing). */
 .article-gain-circles {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.5rem;
     margin-top: 1.5rem;
     align-items: stretch;
-    min-width: 0;
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
     box-sizing: border-box;
 }
 
@@ -2518,7 +2531,7 @@ a.article-toc-link:focus-visible {
     align-items: center;
     text-align: center;
     min-width: 0;
-    flex: 1 1 0;
+    max-width: 100%;
     height: auto;
 }
 
@@ -2584,7 +2597,7 @@ a.article-toc-link:focus-visible {
     max-width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     word-wrap: break-word;
     word-break: break-word;
 }
