@@ -1,7 +1,7 @@
-// Header path: pages under /writings/ or /private/ need parent-relative fetch
+// Header path: subfolder pages load from site root (works for www.drivenbydata.pro and local :port)
 function headerFetchPath() {
     if (window.location.pathname.includes('/writings/') || window.location.pathname.includes('/private/')) {
-        return '../header.html';
+        return '/header.html';
     }
     return 'header.html';
 }
@@ -41,17 +41,17 @@ function configureHeader(currentPage) {
         // For subpages, hash links should go back to index.html with anchors.
         // Articles under /writings/ or /private/ need ../ for assets; root-level writing pages do not.
         const inArticleSubfolder = window.location.pathname.includes('/writings/') || window.location.pathname.includes('/private/');
-        const prefix = currentPage === 'article' && inArticleSubfolder ? '../' : '';
+        const prefix = currentPage === 'article' && inArticleSubfolder ? '/' : '';
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
             if (href.startsWith('#')) {
                 link.setAttribute('href', prefix + 'index.html' + href);
             } else if (href === 'resume.html' && currentPage === 'article' && inArticleSubfolder) {
-                link.setAttribute('href', '../resume.html');
+                link.setAttribute('href', '/resume.html');
             } else if (href === 'story.html' && currentPage === 'article' && inArticleSubfolder) {
-                link.setAttribute('href', '../story.html');
+                link.setAttribute('href', '/story.html');
             } else if (href === 'my-work.html' && currentPage === 'article' && inArticleSubfolder) {
-                link.setAttribute('href', '../my-work.html');
+                link.setAttribute('href', '/my-work.html');
             }
         });
     }
