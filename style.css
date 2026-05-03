@@ -2413,11 +2413,15 @@ a.article-toc-link:focus-visible {
     min-width: 0;
     max-width: 100%;
     overflow-x: hidden;
+    /* Tighter than default .article-section (3.5rem) before “Value aligned…” */
+    margin-bottom: 1.75rem;
 }
 
 .article-split.article-split--tiger-gains {
     max-width: 100%;
     overflow-x: hidden;
+    /* Tighter than default .article-split gap (2rem) between panels / stacked rows */
+    gap: 1rem;
 }
 
 .article-split.article-split--tiger-gains > .article-panel {
@@ -2512,7 +2516,8 @@ a.article-toc-link:focus-visible {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.5rem;
     margin-top: 1.5rem;
-    align-items: stretch;
+    /* start: row height = max of each column's content (stretch was shrinking row vs captions in some layouts) */
+    align-items: start;
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -2526,13 +2531,10 @@ a.article-toc-link:focus-visible {
 }
 
 .article-gain-circle-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;
     text-align: center;
     min-width: 0;
     max-width: 100%;
-    height: auto;
 }
 
 .article-gain-eyebrow {
@@ -2554,16 +2556,18 @@ a.article-toc-link:focus-visible {
 
 .article-gain-knob {
     box-sizing: border-box;
-    flex: 0 0 auto;
-    /* One size for both axes so circles stay round after max cap (no width/height mismatch) */
+    /* Width drives a perfect square; aspect-ratio keeps height in sync (avoids ovals from padding / rounding). */
     --gain-size: min(8.75rem, 148px, max(0px, calc(100% - 4px)));
     width: var(--gain-size);
-    height: var(--gain-size);
+    max-width: 100%;
+    aspect-ratio: 1;
+    height: auto;
     border-radius: 50%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.35rem 0.45rem;
+    padding: 0.4rem;
     margin: 0 auto 0;
     border: 2px solid rgba(79, 209, 197, 0.5);
     background:
@@ -2573,6 +2577,12 @@ a.article-toc-link:focus-visible {
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.06),
         0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+@supports not (aspect-ratio: 1) {
+    .article-gain-knob {
+        height: var(--gain-size);
+    }
 }
 
 .article-gain-knob-value {
@@ -2587,9 +2597,8 @@ a.article-toc-link:focus-visible {
 }
 
 .article-gain-caption {
-    margin: 0;
-    margin-top: auto;
-    padding-top: 0.65rem;
+    margin: 0.65rem 0 0;
+    padding: 0;
     font-size: clamp(0.78rem, 2.2vw, 0.875rem);
     line-height: 1.45;
     color: #A0AEC0;
