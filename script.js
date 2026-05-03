@@ -386,11 +386,12 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     // Hide loading overlay after page loads
     setTimeout(() => {
-        document.body.style.overflow = 'visible';
         const hero = document.querySelector('.hero');
         if (hero) {
             hero.style.opacity = '1';
         }
+        // Do not set body.style.overflow — it overrides style.css overflow-x:hidden and
+        // can change scroll/paint behavior site-wide (including article pages without .hero).
     }, 100);
 });
 
