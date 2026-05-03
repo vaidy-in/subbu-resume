@@ -2407,3 +2407,158 @@ a.article-toc-link:focus-visible {
     margin-top: 2rem;
 }
 
+/* Tiger private deck: wider main column next to TOC */
+@media (min-width: 1024px) {
+    .article-split.article-split--tiger-gains {
+        grid-template-columns: minmax(0, 1fr) minmax(15rem, 17.5rem);
+    }
+}
+
+/* Career journey: stepped cards with directional arrows */
+.article-journey-track {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 1.5rem;
+}
+
+.article-journey-step {
+    margin: 0;
+}
+
+.article-journey-arrow {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0;
+    color: #4FD1C5;
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1;
+    user-select: none;
+}
+
+.article-journey-arrow::before {
+    content: "↓";
+}
+
+@media (min-width: 900px) {
+    .article-journey-track {
+        flex-direction: row;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        gap: 0.35rem;
+    }
+
+    .article-journey-step {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .article-journey-arrow {
+        flex: 0 0 1.75rem;
+        padding: 0 0.15rem;
+        align-self: center;
+    }
+
+    .article-journey-arrow::before {
+        content: "→";
+    }
+}
+
+/* Career journey: emphasize destination step */
+.article-journey-step--highlight {
+    position: relative;
+    background: linear-gradient(165deg, rgba(237, 137, 54, 0.14), rgba(79, 209, 197, 0.1)) !important;
+    border-color: rgba(246, 173, 85, 0.55) !important;
+    box-shadow:
+        0 0 0 2px rgba(237, 137, 54, 0.35),
+        0 14px 40px rgba(0, 0, 0, 0.22);
+    z-index: 1;
+}
+
+.article-journey-step--highlight .article-detail-num {
+    color: #F6AD55;
+}
+
+.article-journey-step--highlight h3 {
+    color: #FFFAF0;
+}
+
+/* What Tiger gains: circular knobs + captions below (private Tiger deck) */
+.article-gain-circles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 1rem;
+    margin-top: 1.5rem;
+    align-items: start;
+}
+
+@media (min-width: 768px) {
+    .article-gain-circles {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1.5rem 0.75rem;
+    }
+}
+
+.article-gain-circle-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.article-gain-knob {
+    width: clamp(108px, 22vw, 148px);
+    height: clamp(108px, 22vw, 148px);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.65rem;
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
+    border: 2px solid rgba(79, 209, 197, 0.5);
+    background:
+        radial-gradient(circle at 32% 22%, rgba(79, 209, 197, 0.28), transparent 55%),
+        radial-gradient(circle at 70% 88%, rgba(237, 137, 54, 0.12), transparent 45%),
+        rgba(26, 32, 44, 0.55);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.article-gain-knob-label {
+    display: block;
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #A0AEC0;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.article-gain-knob-value {
+    display: block;
+    font-size: clamp(0.82rem, 2.8vw, 1.2rem);
+    font-weight: 800;
+    color: #F7FAFC;
+    line-height: 1.1;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.article-gain-caption {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #A0AEC0;
+    max-width: 18rem;
+}
+
