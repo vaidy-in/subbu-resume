@@ -2412,14 +2412,12 @@ a.article-toc-link:focus-visible {
 .article-section#gains {
     min-width: 0;
     max-width: 100%;
-    overflow-x: hidden;
     /* Tighter than default .article-section (3.5rem) before “Value aligned…” */
     margin-bottom: 1.75rem;
 }
 
 .article-split.article-split--tiger-gains {
     max-width: 100%;
-    overflow-x: hidden;
     /* Tighter than default .article-split gap (2rem) between panels / stacked rows */
     gap: 1rem;
 }
@@ -2427,7 +2425,6 @@ a.article-toc-link:focus-visible {
 .article-split.article-split--tiger-gains > .article-panel {
     min-width: 0;
     max-width: 100%;
-    overflow-x: hidden;
 }
 
 @media (min-width: 1024px) {
