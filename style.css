@@ -2397,3 +2397,13 @@ a.article-toc-link:focus-visible {
     outline-offset: 2px;
 }
 
+/* Stacked article grids inside one panel (e.g. long-form / private overviews) */
+.article-panel > .article-flow-grid + .article-detail-grid,
+.article-panel > .article-flow-grid + .article-ownership-grid {
+    margin-top: 1.5rem;
+}
+
+.article-panel > .article-stat-grid + .article-detail-grid {
+    margin-top: 2rem;
+}
+

@@ -1,6 +1,6 @@
-// Header path: pages under /writings/ need parent-relative fetch
+// Header path: pages under /writings/ or /private/ need parent-relative fetch
 function headerFetchPath() {
-    if (window.location.pathname.includes('/writings/')) {
+    if (window.location.pathname.includes('/writings/') || window.location.pathname.includes('/private/')) {
         return '../header.html';
     }
     return 'header.html';
@@ -39,18 +39,18 @@ function configureHeader(currentPage) {
         });
     } else if (currentPage === 'story' || currentPage === 'resume' || currentPage === 'article' || currentPage === 'my-work') {
         // For subpages, hash links should go back to index.html with anchors.
-        // Articles under /writings/ need ../ for assets; root-level writing pages do not.
-        const inWritingsFolder = window.location.pathname.includes('/writings/');
-        const prefix = currentPage === 'article' && inWritingsFolder ? '../' : '';
+        // Articles under /writings/ or /private/ need ../ for assets; root-level writing pages do not.
+        const inArticleSubfolder = window.location.pathname.includes('/writings/') || window.location.pathname.includes('/private/');
+        const prefix = currentPage === 'article' && inArticleSubfolder ? '../' : '';
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
             if (href.startsWith('#')) {
                 link.setAttribute('href', prefix + 'index.html' + href);
-            } else if (href === 'resume.html' && currentPage === 'article' && inWritingsFolder) {
+            } else if (href === 'resume.html' && currentPage === 'article' && inArticleSubfolder) {
                 link.setAttribute('href', '../resume.html');
-            } else if (href === 'story.html' && currentPage === 'article' && inWritingsFolder) {
+            } else if (href === 'story.html' && currentPage === 'article' && inArticleSubfolder) {
                 link.setAttribute('href', '../story.html');
-            } else if (href === 'my-work.html' && currentPage === 'article' && inWritingsFolder) {
+            } else if (href === 'my-work.html' && currentPage === 'article' && inArticleSubfolder) {
                 link.setAttribute('href', '../my-work.html');
             }
         });
