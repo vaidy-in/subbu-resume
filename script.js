@@ -39,7 +39,7 @@ function configureHeader(currentPage) {
         });
     } else if (currentPage === 'story' || currentPage === 'resume' || currentPage === 'article' || currentPage === 'my-work') {
         // For subpages, hash links should go back to index.html with anchors.
-        // Articles under /writings/ or /private/ need ../ for assets; root-level writing pages do not.
+        // Articles under /writings/ or /private/ use root-absolute paths; root-level pages use relative links.
         const inArticleSubfolder = window.location.pathname.includes('/writings/') || window.location.pathname.includes('/private/');
         const prefix = currentPage === 'article' && inArticleSubfolder ? '/' : '';
         navLinks.forEach(link => {
