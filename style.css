@@ -2580,6 +2580,30 @@ a.article-toc-link:focus-visible {
     line-height: 1.42;
 }
 
+/* Tiger private page: spotlight "What Makes Me Different" */
+#differentiator .article-differentiator-highlight {
+    margin: 0;
+    padding: 1.5rem 1.75rem;
+    border-radius: 16px;
+    background: linear-gradient(165deg, rgba(237, 137, 54, 0.14), rgba(79, 209, 197, 0.1));
+    border: 1px solid rgba(246, 173, 85, 0.5);
+    box-shadow:
+        0 0 0 2px rgba(237, 137, 54, 0.22),
+        0 16px 42px rgba(0, 0, 0, 0.28);
+}
+
+#differentiator .article-h2--differentiator {
+    font-size: clamp(1.35rem, 3.5vw, 1.65rem);
+    margin-bottom: 1rem;
+    margin-top: 0;
+    color: #FFFAF0;
+    -webkit-text-fill-color: #FFFAF0;
+}
+
+#differentiator .article-differentiator-highlight .article-prose {
+    margin-bottom: 0;
+}
+
 /* Tiger deck (technical + stewardship): grouped journey rows (labels + flow cards + arrows) */
 .article-grouped-arc {
     margin-top: 2rem;
