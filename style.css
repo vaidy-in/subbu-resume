@@ -1560,25 +1560,6 @@ body {
         max-width: 200px;
     }
 
-    .article-steps-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .article-flow-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .article-code-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .article-ownership-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .article-glance-row {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Writings (inside Featured Projects tabs) */
@@ -1845,7 +1826,7 @@ body {
 }
 
 .article-step-mini strong {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: #E2E8F0;
 }
@@ -1907,7 +1888,7 @@ body {
 }
 
 .article-flow-card h3 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #F7FAFC;
     margin-bottom: 0.5rem;
 }
@@ -1991,15 +1972,17 @@ body {
 
 .article-detail-num {
     display: inline-block;
-    font-size: 0.7rem;
+    font-size: 0.875rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     color: #4FD1C5;
     margin-bottom: 0.75rem;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
 .article-detail-card h3 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #F7FAFC;
     margin-bottom: 0.5rem;
 }
@@ -2046,7 +2029,7 @@ body {
 
 .article-glance-cell strong {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #F7FAFC;
     margin-bottom: 0.35rem;
 }
@@ -2063,7 +2046,7 @@ body {
 }
 
 .article-code-block h3 {
-    font-size: 1rem;
+    font-size: 1.06rem;
     color: #4FD1C5;
     margin-bottom: 0.75rem;
 }
@@ -2096,8 +2079,9 @@ body {
 }
 
 .article-ownership-card h3 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin-bottom: 0.75rem;
+    color: #F7FAFC;
 }
 
 .article-ownership-card p {
@@ -2115,12 +2099,20 @@ body {
     color: #9AE6B4;
 }
 
+.article-ownership-emerald .article-detail-num {
+    color: #9AE6B4;
+}
+
 .article-ownership-indigo {
     border: 1px solid rgba(102, 126, 234, 0.35);
     background: rgba(102, 126, 234, 0.12);
 }
 
 .article-ownership-indigo h3 {
+    color: #B794F4;
+}
+
+.article-ownership-indigo .article-detail-num {
     color: #B794F4;
 }
 
@@ -2131,6 +2123,38 @@ body {
 
 .article-ownership-teal h3 {
     color: #4FD1C5;
+}
+
+.article-ownership-teal .article-detail-num {
+    color: #4FD1C5;
+}
+
+/* Mobile: base grid rules above override earlier @media blocks; collapse to one column
+   so article panels do not overflow narrow viewports. */
+@media (max-width: 768px) {
+    .article-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .article-flow-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .article-code-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .article-ownership-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .article-glance-row {
+        grid-template-columns: 1fr;
+    }
+
+    .article-steps-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .article-author-actions {
