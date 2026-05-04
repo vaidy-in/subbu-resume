@@ -1765,6 +1765,20 @@ body {
     .article-stat-grid {
         grid-template-columns: repeat(4, 1fr);
     }
+
+    .article-stat-grid.article-stat-grid--cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.article-stat-grid.article-stat-grid--cols-3 {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 520px) {
+    .article-stat-grid.article-stat-grid--cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 .article-stat {
@@ -2433,6 +2447,14 @@ a.article-toc-link:focus-visible {
     margin-top: 2rem;
 }
 
+.article-panel > .article-stat-grid + .article-prose {
+    margin-top: 1.25rem;
+}
+
+.article-panel > .article-prose + .article-detail-grid {
+    margin-top: 1.5rem;
+}
+
 /* Tiger private deck: wider main column next to TOC */
 /* Entire gains block: section can widen past viewport on small screens without this */
 .article-section#gains {
@@ -2546,6 +2568,16 @@ a.article-toc-link:focus-visible {
 
 .article-journey-step--highlight h3 {
     color: #FFFAF0;
+}
+
+/* Career journey: de-emphasize early-career card (Tiger private page) */
+#journey .article-journey-step--compact {
+    opacity: 0.9;
+}
+
+#journey .article-journey-step--compact p {
+    font-size: 0.9em;
+    line-height: 1.42;
 }
 
 /* Tiger deck (technical + stewardship): grouped journey rows (labels + flow cards + arrows) */
@@ -2701,5 +2733,11 @@ a.article-toc-link:focus-visible {
     overflow-wrap: anywhere;
     word-wrap: break-word;
     word-break: break-word;
+}
+
+/* Tiger gains: titles live in the knob (no uppercase eyebrow); slightly tighter type for longer phrases. */
+.article-split--tiger-gains .article-gain-knob-value {
+    font-size: clamp(0.62rem, 2.05vw, 0.92rem);
+    line-height: 1.1;
 }
 
