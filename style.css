@@ -1696,7 +1696,7 @@ body {
 
 .article-label {
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #4FD1C5;
@@ -1705,7 +1705,7 @@ body {
 
 .article-h2 {
     font-size: 1.75rem;
-    font-weight: 600;
+    font-weight: 700;
     color: #E2E8F0;
     margin-bottom: 1.25rem;
     background: none;
@@ -1868,8 +1868,8 @@ body {
 
 .article-flow-grid {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     margin-bottom: 2rem;
 }
 
@@ -1877,24 +1877,26 @@ body {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(79, 209, 197, 0.2);
     border-radius: 14px;
-    padding: 1.25rem;
+    padding: 1.5rem;
 }
 
 .article-flow-step {
     display: block;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     color: #4FD1C5;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .article-flow-card h3 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #F7FAFC;
     margin-bottom: 0.5rem;
 }
 
 .article-flow-card p {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     color: #A0AEC0;
     line-height: 1.55;
 }
@@ -2538,8 +2540,59 @@ a.article-toc-link:focus-visible {
     color: #F6AD55;
 }
 
+.article-journey-step--highlight.article-flow-card .article-flow-step {
+    color: #F6AD55;
+}
+
 .article-journey-step--highlight h3 {
     color: #FFFAF0;
+}
+
+/* Tiger deck (technical + stewardship): grouped journey rows (labels + flow cards + arrows) */
+.article-grouped-arc {
+    margin-top: 2rem;
+    padding-top: 0.35rem;
+}
+
+/* Space after the intro line (h3 + tight prose) before the first group heading */
+.article-grouped-arc > .article-label:first-child {
+    margin-top: 1rem;
+}
+
+.article-grouped-arc > .article-label {
+    margin-bottom: 0.85rem;
+}
+
+/* Clear separation before each group heading after a card row */
+.article-grouped-arc > .article-journey-track + .article-label {
+    margin-top: 2.5rem;
+}
+
+/* Journey tracks use global margin-top: 1.5rem — inside the arc, spacing comes from labels instead */
+.article-grouped-arc .article-journey-track {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+}
+
+/* Tight coupling: group title → its row of cards */
+.article-grouped-arc > .article-label + .article-journey-track {
+    margin-top: 0;
+}
+
+.article-grouped-arc .article-flow-card ul {
+    margin: 0.35rem 0 0;
+    padding-left: 1.1rem;
+    font-size: 0.9rem;
+    color: #A0AEC0;
+    line-height: 1.55;
+}
+
+.article-grouped-arc .article-flow-card li {
+    margin-bottom: 0.4rem;
+}
+
+.article-grouped-arc .article-journey-step--highlight.article-flow-card li {
+    color: #E2E8F0;
 }
 
 /* What Tiger gains: circular knobs + captions (private Tiger deck)
