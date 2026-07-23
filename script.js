@@ -1,6 +1,6 @@
 // Header path: subfolder pages load from site root (works for www.drivenbydata.pro and local :port)
 function headerFetchPath() {
-    if (window.location.pathname.includes('/writings/') || window.location.pathname.includes('/private/')) {
+    if (window.location.pathname.includes('/writings/')) {
         return '/header.html';
     }
     return 'header.html';
@@ -39,8 +39,8 @@ function configureHeader(currentPage) {
         });
     } else if (currentPage === 'story' || currentPage === 'resume' || currentPage === 'article' || currentPage === 'my-work') {
         // For subpages, hash links should go back to index.html with anchors.
-        // Articles under /writings/ or /private/ use root-absolute paths; root-level pages use relative links.
-        const inArticleSubfolder = window.location.pathname.includes('/writings/') || window.location.pathname.includes('/private/');
+        // Articles under /writings/ use root-absolute paths; root-level pages use relative links.
+        const inArticleSubfolder = window.location.pathname.includes('/writings/');
         const prefix = currentPage === 'article' && inArticleSubfolder ? '/' : '';
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
