@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; object-src 'none'; upgrade-insecure-requests">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WVC6DH29QQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WVC6DH29QQ');
+  </script>
+  <title>Decision Provenance: The Next Evolution of Data Lineage — Subramanian Gopalkrishnan</title>
+  <meta name="description" content="Why data lineage alone is insufficient for AI systems—and how decision provenance connects context, models, policies, human oversight, actions, and outcomes into an auditable chain of evidence.">
+  <meta name="author" content="Subu Gopal">
+  <meta name="keywords" content="decision provenance, AI governance, data lineage, model lineage, agent governance, AI observability, decision quality, responsible AI">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.drivenbydata.pro/writings/decision-provenance-ai-lineage.html">
+  <meta property="og:title" content="Decision Provenance: The Next Evolution of Data Lineage in the Age of AI">
+  <meta property="og:description" content="The missing join between lineage, runtime telemetry, authority, and business outcomes.">
+  <meta property="og:image" content="https://www.drivenbydata.pro/images/hero-profile-og.png">
+  <meta property="og:site_name" content="DrivenByData.pro">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='10' fill='%231A202C'/><text x='50%' y='54%' dominant-baseline='central' text-anchor='middle' font-size='65' font-weight='600' font-family='Inter, sans-serif' fill='%23ED8936'>S</text></svg>">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .dp-compare {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.25rem;
+      align-items: stretch;
+      margin-top: 1.5rem;
+    }
+
+    .dp-compare-arrow {
+      display: grid;
+      place-items: center;
+      color: #ED8936;
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+
+    .dp-compare-card {
+      border: 1px solid rgba(79, 209, 197, 0.2);
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .dp-compare-card--emph {
+      border-color: rgba(237, 137, 54, 0.45);
+      box-shadow: inset 0 0 0 1px rgba(237, 137, 54, 0.08);
+    }
+
+    .dp-compare-card h3 {
+      margin: 0 0 0.85rem;
+      font-size: 1.05rem;
+      color: #F7FAFC;
+    }
+
+    .dp-compare-card--emph h3 {
+      color: #ED8936;
+    }
+
+    .dp-compare-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .dp-compare-card li {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(160, 174, 192, 0.15);
+      color: #A0AEC0;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .dp-compare-card li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .dp-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 0.45rem;
+      flex: 0 0 auto;
+      background: #718096;
+    }
+
+    .dp-compare-card--emph .dp-dot {
+      background: #4FD1C5;
+      box-shadow: 0 0 10px rgba(79, 209, 197, 0.5);
+    }
+
+    .dp-layer-stack {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .dp-layer {
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem 1.15rem;
+      border-radius: 12px;
+      color: #F7FAFC;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dp-layer strong {
+      font-size: 0.98rem;
+    }
+
+    .dp-layer small {
+      color: rgba(247, 250, 252, 0.82);
+      font-size: 0.9rem;
+    }
+
+    .dp-layer .dp-q {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(247, 250, 252, 0.9);
+      text-align: right;
+      max-width: 11rem;
+    }
+
+    .dp-l1 { background: rgba(113, 128, 150, 0.45); }
+    .dp-l2 { background: rgba(49, 130, 206, 0.45); }
+    .dp-l3 { background: rgba(128, 90, 213, 0.45); }
+    .dp-l4 { background: rgba(15, 118, 110, 0.55); }
+    .dp-l5 { background: rgba(47, 133, 90, 0.5); }
+
+    .dp-layer-note {
+      margin-top: 0.85rem;
+      color: #A0AEC0;
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .dp-flow-shell {
+      margin-top: 1rem;
+      padding: 1.35rem;
+      border-radius: 16px;
+      border: 1px solid rgba(79, 209, 197, 0.22);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.18)),
+        radial-gradient(circle at top right, rgba(79, 209, 197, 0.12), transparent 40%);
+    }
+
+    .dp-flow-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.1rem;
+    }
+
+    .dp-flow-title h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: #F7FAFC;
+    }
+
+    .dp-legend {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .dp-legend span {
+      padding: 0.3rem 0.65rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      color: #A0AEC0;
+      font-size: 0.75rem;
+    }
+
+    .dp-evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .dp-ev {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(79, 209, 197, 0.18);
+      border-radius: 12px;
+      padding: 0.95rem;
+      min-height: 6.5rem;
+    }
+
+    .dp-ev b {
+      display: block;
+      margin: 0.45rem 0 0.2rem;
+      color: #F7FAFC;
+      font-size: 0.92rem;
+    }
+
+    .dp-ev small {
+      color: #A0AEC0;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .dp-funnel {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 0.65rem;
+      margin: 1.1rem 0;
+    }
+
+    .dp-fnode {
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #E2E8F0;
+      font-size: 0.9rem;
+    }
+
+    .dp-fnode--decision {
+      background: linear-gradient(135deg, rgba(49, 130, 206, 0.55), rgba(128, 90, 213, 0.55));
+      border-color: rgba(237, 137, 54, 0.35);
+      font-weight: 600;
+    }
+
+    .dp-arrow {
+      color: #4FD1C5;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .dp-outcomes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+    }
+
+    .dp-out {
+      padding: 0.75rem;
+      border-radius: 10px;
+      background: rgba(79, 209, 197, 0.1);
+      border: 1px solid rgba(79, 209, 197, 0.22);
+      text-align: center;
+      color: #81E6D9;
+      font-size: 0.82rem;
+    }
+
+    .dp-maturity {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .dp-mcard {
+      position: relative;
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(79, 209, 197, 0.2);
+      border-radius: 12px;
+      padding: 1.15rem;
+      overflow: hidden;
+    }
+
+    .dp-mcard::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--c, #4FD1C5);
+    }
+
+    .dp-mcard .dp-level {
+      font-weight: 800;
+      color: var(--c, #4FD1C5);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .dp-mcard h3 {
+      margin: 0.45rem 0;
+      font-size: 1rem;
+      color: #F7FAFC;
+    }
+
+    .dp-mcard p {
+      margin: 0;
+      color: #A0AEC0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .dp-mcard .dp-question {
+      margin-top: 0.9rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(160, 174, 192, 0.18);
+      font-weight: 650;
+      color: #E2E8F0;
+      font-size: 0.9rem;
+    }
+
+    .dp-architecture {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .dp-plane {
+      padding: 1.25rem;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(79, 209, 197, 0.2);
+    }
+
+    .dp-plane--prov {
+      border-color: rgba(183, 148, 244, 0.35);
+    }
+
+    .dp-plane .dp-big {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #4FD1C5;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .dp-plane--prov .dp-big {
+      color: #B794F4;
+    }
+
+    .dp-plane h3 {
+      margin: 0 0 0.5rem;
+      color: #F7FAFC;
+      font-size: 1.05rem;
+    }
+
+    .dp-plane p {
+      margin: 0;
+      color: #A0AEC0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .dp-join-band {
+      grid-column: 1 / -1;
+      background: linear-gradient(90deg, rgba(49, 130, 206, 0.55), rgba(128, 90, 213, 0.55));
+      color: #F7FAFC;
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+      text-align: center;
+      font-size: 0.98rem;
+      font-weight: 650;
+    }
+
+    .dp-case {
+      margin-top: 0.5rem;
+      padding: 1.35rem;
+      border-radius: 14px;
+      border: 1px solid rgba(79, 209, 197, 0.22);
+      background: linear-gradient(140deg, rgba(79, 209, 197, 0.08), rgba(49, 130, 206, 0.08));
+    }
+
+    .dp-case-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.35rem;
+    }
+
+    .dp-case h3 {
+      margin: 0 0 0.75rem;
+      color: #F7FAFC;
+      font-size: 1.15rem;
+    }
+
+    .dp-case p {
+      margin: 0 0 0.9rem;
+      color: #A0AEC0;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .dp-case p:last-child {
+      margin-bottom: 0;
+    }
+
+    .dp-steps {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .dp-step {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 0.75rem 0.9rem;
+      border: 1px solid rgba(79, 209, 197, 0.16);
+      display: flex;
+      gap: 0.75rem;
+      color: #CBD5E0;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .dp-step b {
+      color: #4FD1C5;
+    }
+
+    .dp-verdict {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(79, 209, 197, 0.25);
+    }
+
+    .dp-verdict h2 {
+      margin: 0 0 0.65rem;
+      font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+      line-height: 1.25;
+      color: #F7FAFC;
+    }
+
+    .dp-verdict p {
+      margin: 0;
+      color: #A0AEC0;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .dp-seal {
+      width: 8.5rem;
+      height: 8.5rem;
+      border-radius: 50%;
+      border: 2px solid rgba(79, 209, 197, 0.55);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #4FD1C5;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      line-height: 1.35;
+      box-shadow: inset 0 0 28px rgba(79, 209, 197, 0.08);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 900px) {
+      .dp-compare,
+      .dp-architecture,
+      .dp-case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dp-compare-arrow {
+        transform: rotate(90deg);
+      }
+
+      .dp-evidence-grid,
+      .dp-outcomes,
+      .dp-maturity {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dp-layer {
+        grid-template-columns: 120px 1fr;
+      }
+
+      .dp-layer .dp-q {
+        grid-column: 2;
+        text-align: left;
+        max-width: none;
+      }
+
+      .dp-verdict {
+        grid-template-columns: 1fr;
+      }
+
+      .dp-seal {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .dp-evidence-grid,
+      .dp-outcomes,
+      .dp-maturity {
+        grid-template-columns: 1fr;
+      }
+
+      .dp-funnel {
+        grid-template-columns: 1fr;
+      }
+
+      .dp-arrow {
+        transform: rotate(90deg);
+        text-align: center;
+      }
+
+      .dp-layer {
+        grid-template-columns: 1fr;
+      }
+
+      .dp-layer .dp-q {
+        grid-column: 1;
+      }
+    }
+  </style>
+</head>
+<body data-page="article">
+  <div id="header-placeholder"></div>
+
+  <article class="article-page page-container">
+    <header class="article-hero">
+      <div class="container article-hero-inner">
+        <p class="article-kicker">AI governance · Evidence architecture · Decision quality</p>
+        <h1 class="article-title">Decision Provenance: The Next Evolution of Data Lineage?</h1>
+        <p class="article-lead">
+          Data lineage can show where information came from. AI systems demand a harder answer:
+          <strong>what combination of context, authority, model behavior, tools, human intervention, and policy produced this decision—and what happened next?</strong>
+        </p>
+        <div class="article-tags">
+          <span>10 min read</span>
+          <span>Decision provenance</span>
+          <span>AI lineage</span>
+          <span>Runtime evidence</span>
+          <span>Outcome assurance</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="container article-body">
+
+      <section class="article-section">
+        <div class="article-split">
+          <div class="article-panel">
+            <p class="article-label">The central thesis</p>
+            <p class="article-prose">
+              Decision provenance is not a replacement for data lineage. It is the missing business-semantic join that connects lineage, runtime evidence, authority, action, and outcomes at the level of an individual decision.
+            </p>
+            <blockquote class="article-pullquote">
+              A dataset can be perfectly governed, a model can be approved, and a prompt can be tested—yet the resulting decision can still be indefensible because the evidence chain was never joined.
+            </blockquote>
+          </div>
+          <aside class="article-panel article-panel-accent">
+            <p class="article-label">In this article</p>
+            <ul class="article-summary-list article-toc" aria-label="Sections in this article">
+              <li><a class="article-toc-link" href="#breaking-point">Why lineage breaks</a></li>
+              <li><a class="article-toc-link" href="#evidence-stack">Evidence stack</a></li>
+              <li><a class="article-toc-link" href="#evidence-chain">Decision evidence chain</a></li>
+              <li><a class="article-toc-link" href="#maturity">Maturity model</a></li>
+              <li><a class="article-toc-link" href="#architecture">Architecture pattern</a></li>
+              <li><a class="article-toc-link" href="#enterprise-example">Enterprise example</a></li>
+              <li><a class="article-toc-link" href="#implementation">Six implementation moves</a></li>
+              <li><a class="article-toc-link" href="#verdict">Verdict</a></li>
+            </ul>
+            <div class="article-soft-box">
+              <h4>Decision provenance</h4>
+              <p>
+                The reconstructable join of <strong>context + execution + authority + action + outcome</strong>—so each decision can be explained, audited, and improved.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="article-section" id="breaking-point">
+        <div class="article-panel">
+          <p class="article-label">The breaking point</p>
+          <h2 class="article-h2">AI makes traditional lineage necessary—but no longer sufficient</h2>
+          <p class="article-prose">
+            Classic lineage was designed to answer questions such as: Where did this field originate? Which transformation changed it? Which report consumes it?
+          </p>
+          <p class="article-prose">
+            Those questions still matter. But an AI-enabled decision may also depend on a prompt version, a retrieved document set, an agent’s selected tool, a policy evaluation, a delegated identity, a human override, and the business event that followed.
+          </p>
+          <p class="article-prose">
+            None of these is reliably represented by dataset-to-dataset lineage alone. The governing object is no longer just the data pipeline. It is the <span class="article-highlight">decision path</span>.
+          </p>
+
+          <div class="dp-compare">
+            <div class="dp-compare-card">
+              <h3>Traditional lineage</h3>
+              <ul>
+                <li><span class="dp-dot"></span><span>Sources, datasets, transformations</span></li>
+                <li><span class="dp-dot"></span><span>Jobs, tables, schemas, reports</span></li>
+                <li><span class="dp-dot"></span><span>Upstream and downstream dependency</span></li>
+                <li><span class="dp-dot"></span><span>Best question: “Where did this data come from?”</span></li>
+              </ul>
+            </div>
+            <div class="dp-compare-arrow" aria-hidden="true">→</div>
+            <div class="dp-compare-card dp-compare-card--emph">
+              <h3>Decision provenance</h3>
+              <ul>
+                <li><span class="dp-dot"></span><span>Context, model, prompt, retrieval and tools</span></li>
+                <li><span class="dp-dot"></span><span>Identity, delegation, policy and approvals</span></li>
+                <li><span class="dp-dot"></span><span>Actions, reversals, incidents and outcomes</span></li>
+                <li><span class="dp-dot"></span><span>Harder question: “Why was this action produced and allowed?”</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="evidence-stack">
+        <div class="article-panel">
+          <p class="article-label">A layered taxonomy</p>
+          <h2 class="article-h2">The evidence stack enterprises actually need</h2>
+          <p class="article-prose">
+            “Provenance” is often used as a catch-all. Separating the layers makes the control gap visible.
+          </p>
+          <div class="dp-layer-stack">
+            <div class="dp-layer dp-l1"><strong>Data provenance</strong><small>Source systems, datasets, features, transformations</small><span class="dp-q">Where did the input originate?</span></div>
+            <div class="dp-layer dp-l2"><strong>Model provenance</strong><small>Model version, training lineage, evaluation, approval</small><span class="dp-q">Which model was authorized?</span></div>
+            <div class="dp-layer dp-l3"><strong>Execution provenance</strong><small>Spans, agent steps, retrievals, tools, messages</small><span class="dp-q">What happened at runtime?</span></div>
+            <div class="dp-layer dp-l4"><strong>Decision provenance</strong><small>Context + execution + authority + action</small><span class="dp-q">Why did decision X occur?</span></div>
+            <div class="dp-layer dp-l5"><strong>Outcome provenance</strong><small>Overrides, complaints, incidents, value, harm</small><span class="dp-q">What happened because of it?</span></div>
+          </div>
+          <p class="dp-layer-note">The strategic gap is usually between execution provenance and outcome provenance. Decision provenance closes that gap.</p>
+        </div>
+      </section>
+
+      <section class="article-section" id="evidence-chain">
+        <div class="article-panel article-diagram">
+          <p class="article-label">Infographic</p>
+          <h2 class="article-h2">From context to consequence: the decision evidence chain</h2>
+          <div class="dp-flow-shell">
+            <div class="dp-flow-title">
+              <h3>Decision Provenance Record</h3>
+              <div class="dp-legend">
+                <span>Entities</span>
+                <span>Activities</span>
+                <span>Agents</span>
+                <span>Policies</span>
+                <span>Outcomes</span>
+              </div>
+            </div>
+            <div class="dp-evidence-grid">
+              <div class="dp-ev"><b>User / system input</b><small>request, subject, purpose</small></div>
+              <div class="dp-ev"><b>Retrieved context</b><small>documents, versions, scores</small></div>
+              <div class="dp-ev"><b>Model &amp; prompt</b><small>model, prompt, parameters</small></div>
+              <div class="dp-ev"><b>Tools &amp; agents</b><small>calls, arguments, delegation</small></div>
+              <div class="dp-ev"><b>Identity</b><small>human, service, agent authority</small></div>
+              <div class="dp-ev"><b>Policy decision</b><small>rule, version, evaluated facts</small></div>
+              <div class="dp-ev"><b>Human oversight</b><small>approval, override, rationale</small></div>
+              <div class="dp-ev"><b>Integrity evidence</b><small>hash, signature, retention</small></div>
+            </div>
+            <div class="dp-funnel">
+              <div class="dp-fnode">Context assembly</div>
+              <div class="dp-arrow" aria-hidden="true">→</div>
+              <div class="dp-fnode dp-fnode--decision"><strong>DECISION ID</strong><br>Evidence-backed action</div>
+              <div class="dp-arrow" aria-hidden="true">→</div>
+              <div class="dp-fnode">Business workflow</div>
+            </div>
+            <div class="dp-outcomes">
+              <div class="dp-out">Outcome</div>
+              <div class="dp-out">Human reversal</div>
+              <div class="dp-out">Incident / complaint</div>
+              <div class="dp-out">Measured value or harm</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="maturity">
+        <div class="article-panel">
+          <p class="article-label">A pragmatic maturity model</p>
+          <h2 class="article-h2">Do not begin by capturing everything</h2>
+          <p class="article-prose">
+            A defensible program can mature in four stages. Each stage should be judged by the questions it can answer—not by the volume of telemetry it stores.
+          </p>
+          <div class="dp-maturity">
+            <div class="dp-mcard" style="--c:#A0AEC0">
+              <div class="dp-level">Level 1</div>
+              <h3>Inventory &amp; accountability</h3>
+              <p>Identify the application, model, prompt, environment, owner and timestamp.</p>
+              <div class="dp-question">“What system produced this?”</div>
+            </div>
+            <div class="dp-mcard" style="--c:#63B3ED">
+              <div class="dp-level">Level 2</div>
+              <h3>Technical reconstruction</h3>
+              <p>Add trace IDs, inputs, dataset references, retrieved documents and tool calls.</p>
+              <div class="dp-question">“What technical path led here?”</div>
+            </div>
+            <div class="dp-mcard" style="--c:#B794F4">
+              <div class="dp-level">Level 3</div>
+              <h3>Authority &amp; governance</h3>
+              <p>Add identity, delegation, policy version, approvals, risk tier and exceptions.</p>
+              <div class="dp-question">“Why was this allowed?”</div>
+            </div>
+            <div class="dp-mcard" style="--c:#4FD1C5">
+              <div class="dp-level">Level 4</div>
+              <h3>Outcome-linked assurance</h3>
+              <p>Connect decisions to later outcomes, reversals, incidents, value and harm.</p>
+              <div class="dp-question">“What happened because of it?”</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="architecture">
+        <div class="article-panel">
+          <p class="article-label">Architecture pattern</p>
+          <h2 class="article-h2">Decision provenance is assembled—not purchased whole</h2>
+          <p class="article-prose">
+            Catalogs, model registries, observability tools, policy engines, workflow platforms and evidence stores each cover part of the problem. A durable design uses two complementary planes.
+          </p>
+          <div class="dp-architecture">
+            <div class="dp-plane">
+              <div class="dp-big">01</div>
+              <h3>Event plane</h3>
+              <p>Immutable runtime events preserve source truth: model calls, retrievals, tool invocations, policy decisions, approvals and outcome events. CloudEvents-style envelopes and OpenTelemetry-compatible telemetry are useful building blocks.</p>
+            </div>
+            <div class="dp-plane dp-plane--prov">
+              <div class="dp-big">02</div>
+              <h3>Provenance plane</h3>
+              <p>A typed graph—or graph-indexed relational model—materializes entities, activities, agents and causal relationships. W3C PROV offers a durable conceptual foundation.</p>
+            </div>
+            <div class="dp-join-band">Stable identifiers + point-in-time versions + integrity evidence = reconstructable decisions</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="enterprise-example">
+        <div class="article-panel">
+          <p class="article-label">Enterprise example</p>
+          <h2 class="article-h2">Why the outcome link changes governance</h2>
+          <div class="dp-case">
+            <div class="dp-case-grid">
+              <div>
+                <h3>Scenario: AI-supported supplier risk review</h3>
+                <p>An AI agent summarizes supplier evidence, checks policy, calls a sanctions service, and recommends whether to approve onboarding. A human reviewer accepts the recommendation.</p>
+                <p>Three months later, the supplier is suspended after a compliance incident. Traditional logs can show system events. Decision provenance lets the enterprise reconstruct the exact evidence, policy, authority and reasoning path associated with the original approval.</p>
+              </div>
+              <div class="dp-steps">
+                <div class="dp-step"><b>1</b><span>Which supplier documents and versions were retrieved?</span></div>
+                <div class="dp-step"><b>2</b><span>Which sanctions result and tool arguments were used?</span></div>
+                <div class="dp-step"><b>3</b><span>Which policy version allowed approval?</span></div>
+                <div class="dp-step"><b>4</b><span>What evidence was shown to the human reviewer?</span></div>
+                <div class="dp-step"><b>5</b><span>Did similar decisions under the same policy later fail?</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="implementation">
+        <div class="article-panel">
+          <p class="article-label">What to do now</p>
+          <h2 class="article-h2">Six implementation moves that create real evidence</h2>
+          <div class="article-detail-grid" style="margin-top:1.25rem;">
+            <div class="article-detail-card">
+              <span class="article-detail-num">01</span>
+              <h3>Define the decision unit</h3>
+              <p>Start with a stable <code>decision_id</code>. Without it, telemetry remains disconnected.</p>
+            </div>
+            <div class="article-detail-card">
+              <span class="article-detail-num">02</span>
+              <h3>Tier capture by risk</h3>
+              <p>Use full fidelity for high-impact decisions and selective capture for lower-risk flows.</p>
+            </div>
+            <div class="article-detail-card">
+              <span class="article-detail-num">03</span>
+              <h3>Version the context</h3>
+              <p>Persist document versions, hashes, retriever configuration and model/prompt versions.</p>
+            </div>
+            <div class="article-detail-card">
+              <span class="article-detail-num">04</span>
+              <h3>Make authority queryable</h3>
+              <p>Link identity, delegation, policy input, approval and exception identifiers.</p>
+            </div>
+            <div class="article-detail-card">
+              <span class="article-detail-num">05</span>
+              <h3>Close the outcome loop</h3>
+              <p>Connect reversals, incidents, complaints and realized business results back to decisions.</p>
+            </div>
+            <div class="article-detail-card">
+              <span class="article-detail-num">06</span>
+              <h3>Measure reconstruction fidelity</h3>
+              <p>Test whether sampled decisions can be reconstructed within an agreed SLA.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="verdict">
+        <div class="article-panel">
+          <p class="article-label">Closing</p>
+          <div class="dp-verdict">
+            <div>
+              <h2>So—is decision provenance truly the next evolution of lineage?</h2>
+              <p><strong>Yes, with an important qualification.</strong> It is not “better lineage” and it should not erase the disciplines of data or model lineage. It is an evidence architecture built above them. Its purpose is to make decisions reconstructable across technical and organizational boundaries—and to connect them to consequences.</p>
+            </div>
+            <div class="dp-seal">LINEAGE<br>+ AUTHORITY<br>+ OUTCOME</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-panel">
+          <p class="article-label">Reference foundation</p>
+          <h3 class="article-h3">Standards and guidance informing this perspective</h3>
+          <ol style="margin:0 0 1.25rem; padding-left:1.35rem; color:#CBD5E0; line-height:1.75;">
+            <li><a href="https://www.w3.org/TR/prov-dm/" target="_blank" rel="noopener">W3C PROV-DM</a> — conceptual model for entities, activities, agents and provenance relations.</li>
+            <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework</a> and the <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank" rel="noopener">Generative AI Profile</a>.</li>
+            <li><a href="https://opentelemetry.io/docs/specs/semconv/gen-ai/" target="_blank" rel="noopener">OpenTelemetry Generative AI semantic conventions</a> for runtime AI telemetry.</li>
+            <li><a href="https://openlineage.io/docs/spec/object-model/" target="_blank" rel="noopener">OpenLineage object model</a> for jobs, runs, datasets and extensible facets.</li>
+            <li><a href="https://www.openpolicyagent.org/docs/management-decision-logs" target="_blank" rel="noopener">Open Policy Agent decision logs</a> for policy evaluation evidence.</li>
+            <li><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">EU Artificial Intelligence Act</a>, including logging, documentation, human oversight and post-market monitoring obligations for high-risk systems.</li>
+          </ol>
+          <p class="article-prose article-prose--tight">
+            <em>This article presents an analytical synthesis. “Decision provenance” is an emerging enterprise architecture pattern rather than a single universally standardized product category.</em>
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <div class="article-at-a-glance">
+          <h3 class="article-h3">About the author</h3>
+          <p class="article-prose">
+            I help organizations turn governance from a policy layer into an operating model—connecting data quality,
+            metadata, stewardship, platform architecture, and trusted consumption across modern cloud ecosystems.
+          </p>
+          <p class="article-prose article-prose--tight">
+            My work has consistently focused on the point where business trust breaks down: not only in bad source data,
+            but in weak transformation controls, disconnected metadata, and ungoverned decision pipelines.
+          </p>
+          <div class="article-author-actions">
+            <a href="../index.html#contact" class="article-cta-btn article-cta-btn--primary">Connect</a>
+            <a href="../story.html" class="article-cta-btn article-cta-btn--secondary">Read My Story</a>
+            <a href="../index.html#writings" class="article-cta-btn article-cta-btn--secondary">More Writings</a>
+          </div>
+        </div>
+      </section>
+
+      <nav class="article-back">
+        <a href="../index.html#writings" class="secondary-button">← Back to Writings</a>
+      </nav>
+    </div>
+  </article>
+
+  <script src="../script.js"></script>
+</body>
+</html>
